@@ -23,7 +23,7 @@ export function Button({
       className={cn(
         "inline-flex items-center justify-center gap-2 rounded-full font-medium transition disabled:opacity-50 disabled:pointer-events-none",
         variant === "primary" &&
-          "bg-cyan-300 text-slate-950 hover:bg-cyan-200",
+          "bg-[#e8b44d] text-[#16081f] hover:bg-[#f0c15a]",
         variant === "secondary" &&
           "bg-zinc-800 text-zinc-100 hover:bg-zinc-700",
         variant === "ghost" && "text-zinc-300 hover:bg-zinc-800",
