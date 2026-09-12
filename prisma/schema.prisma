@@ -1,0 +1,114 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  workspace     Workspace?
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Workspace {
+  id                   String           @id @default(cuid())
+  userId               String           @unique
+  user                 User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name                 String           @default("My startup")
+  mrrCents             Int              @default(0)
+  payingUsers          Int              @default(0)
+  runwayMonths         Float            @default(0)
+  weeklyGoal           String           @default("")
+  onboardingComplete   Boolean          @default(false)
+  stripeCustomerId     String?
+  stripeSubscriptionId String?
+  planStatus           String           @default("unpaid")
+  planInterval         String?
+  snapshots            MetricSnapshot[]
+  customers            Customer[]
+  reviews              WeeklyReview[]
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+}
+
+model MetricSnapshot {
+  id           String    @id @default(cuid())
+  workspaceId  String
+  workspace    Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  recordedAt   DateTime  @default(now())
+  mrrCents     Int
+  payingUsers  Int
+  runwayMonths Float
+}
+
+model Customer {
+  id          String    @id @default(cuid())
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  name        String
+  email       String    @default("")
+  amountCents Int
+  paidAt      DateTime
+  notes       String    @default("")
+  createdAt   DateTime  @default(now())
+}
+
+model WeeklyReview {
+  id           String    @id @default(cuid())
+  workspaceId  String
+  workspace    Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  weekOf       DateTime
+  mrrCents     Int
+  payingUsers  Int
+  runwayMonths Float
+  priority1    String    @default("")
+  priority2    String    @default("")
+  priority3    String    @default("")
+  p1Done       Boolean   @default(false)
+  p2Done       Boolean   @default(false)
+  p3Done       Boolean   @default(false)
+  whatMoved    String    @default("")
+  createdAt    DateTime  @default(now())
+}
