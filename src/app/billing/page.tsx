@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { requireSession, getWorkspace, isPaid } from "@/lib/workspace";
+import { BrandMark } from "@/components/brand";
 import { Button } from "@/components/ui";
 import { stripeConfigured } from "@/lib/stripe";
 import Link from "next/link";
@@ -11,9 +12,7 @@ export default async function BillingPage() {
 
   return (
     <div className="mx-auto flex min-h-full max-w-lg flex-col justify-center px-6 py-16">
-      <Link href="/" className="font-serif text-2xl text-amber-300">
-        Pulseboard
-      </Link>
+      <BrandMark />
       <h1 className="mt-6 font-serif text-4xl text-zinc-50">
         {paid ? "You're in." : "Pay to use Pulseboard."}
       </h1>

@@ -1,8 +1,8 @@
 import { authFlags, signIn } from "@/auth";
 import { auth } from "@/auth";
+import { BrandMark } from "@/components/brand";
 import { Button, Input, Label } from "@/components/ui";
 import { redirect } from "next/navigation";
-import Link from "next/link";
 
 export default async function LoginPage({
   searchParams,
@@ -36,9 +36,7 @@ export default async function LoginPage({
   return (
     <div className="flex min-h-full items-center justify-center bg-[radial-gradient(circle_at_top,_rgba(251,191,36,0.12),_transparent_40%)] px-6">
       <div className="w-full max-w-md rounded-3xl border border-zinc-800 bg-zinc-950 p-8">
-        <Link href="/" className="font-serif text-2xl text-amber-300">
-          Pulseboard
-        </Link>
+        <BrandMark />
         <h1 className="mt-6 font-serif text-4xl text-zinc-50">Sign in</h1>
         <p className="mt-2 text-sm text-zinc-400">
           Use your work email. You&apos;ll pick a plan next — $12/mo or $99/year.

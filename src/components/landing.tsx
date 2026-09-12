@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandMark } from "@/components/brand";
 import { Button } from "@/components/ui";
 
 export function LandingMock() {
@@ -63,9 +64,7 @@ export function LandingMock() {
 export function SiteHeader() {
   return (
     <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6">
-      <Link href="/" className="font-serif text-2xl text-amber-300">
-        Pulseboard
-      </Link>
+      <BrandMark />
       <div className="flex items-center gap-3">
         <Link href="/login" className="text-sm text-zinc-400 hover:text-zinc-100">
           Sign in

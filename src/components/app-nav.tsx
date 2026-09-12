@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
@@ -24,8 +25,15 @@ export function AppNav({
   return (
     <aside className="flex w-full flex-col border-b border-zinc-800 bg-zinc-950 lg:h-screen lg:w-60 lg:border-b-0 lg:border-r">
       <div className="flex items-center justify-between px-5 py-4 lg:block">
-        <Link href="/app" className="font-serif text-xl text-amber-300">
-          Pulseboard
+        <Link href="/app" className="inline-flex items-center gap-2">
+          <Image
+            src="/logo.png"
+            alt="Pulseboard"
+            width={28}
+            height={28}
+            className="rounded-md"
+          />
+          <span className="font-serif text-xl text-amber-300">Pulseboard</span>
         </Link>
         <p className="hidden text-sm text-zinc-500 lg:mt-1 lg:block">
           {workspaceName}
