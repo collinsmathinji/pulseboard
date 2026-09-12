@@ -23,8 +23,8 @@ export function AppNav({
   const pathname = usePathname();
 
   return (
-    <aside className="flex w-full flex-col border-b border-zinc-800 bg-zinc-950 lg:h-screen lg:w-60 lg:border-b-0 lg:border-r">
-      <div className="flex items-center justify-between px-5 py-4 lg:block">
+    <aside className="flex w-full flex-col border-b border-white/8 bg-[#16081f] lg:sticky lg:top-0 lg:h-svh lg:w-64 lg:border-r lg:border-b-0">
+      <div className="flex items-center justify-between px-5 py-5 lg:block">
         <Link href="/app" className="inline-flex items-center gap-2">
           <Image
             src="/logo.png"
@@ -33,13 +33,13 @@ export function AppNav({
             height={28}
             className="rounded-md"
           />
-          <span className="font-serif text-xl text-[#e8b44d]">Pulseboard</span>
+          <span className="font-serif text-xl text-[#e8b44d]">pulseboard</span>
         </Link>
-        <p className="hidden text-sm text-zinc-500 lg:mt-1 lg:block">
+        <p className="hidden truncate text-sm text-white/45 lg:mt-2 lg:block">
           {workspaceName}
         </p>
       </div>
-      <nav className="flex gap-1 overflow-x-auto px-3 pb-3 lg:flex-1 lg:flex-col lg:overflow-visible">
+      <nav className="flex gap-1 overflow-x-auto px-3 pb-3 lg:flex-1 lg:flex-col lg:overflow-visible lg:px-4">
         {links.map((link) => {
           const active =
             link.href === "/app"
@@ -51,8 +51,8 @@ export function AppNav({
               href={link.href}
               className={`rounded-full px-3 py-2 text-sm whitespace-nowrap ${
                 active
-                  ? "bg-zinc-800 text-zinc-50"
-                  : "text-zinc-400 hover:bg-zinc-900 hover:text-zinc-100"
+                  ? "bg-[#e8b44d] text-[#16081f]"
+                  : "text-white/60 hover:bg-white/8 hover:text-white"
               }`}
             >
               {link.label}
@@ -60,8 +60,8 @@ export function AppNav({
           );
         })}
       </nav>
-      <div className="flex items-center justify-between gap-3 border-t border-zinc-800 px-4 py-3">
-        <p className="truncate text-xs text-zinc-500">{email}</p>
+      <div className="flex items-center justify-between gap-3 border-t border-white/8 px-4 py-4">
+        <p className="truncate text-xs text-white/40">{email}</p>
         <Button
           variant="ghost"
           size="sm"

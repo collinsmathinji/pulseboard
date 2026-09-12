@@ -25,10 +25,10 @@ export function Button({
         variant === "primary" &&
           "bg-[#e8b44d] text-[#16081f] hover:bg-[#f0c15a]",
         variant === "secondary" &&
-          "bg-zinc-800 text-zinc-100 hover:bg-zinc-700",
-        variant === "ghost" && "text-zinc-300 hover:bg-zinc-800",
+          "bg-white/10 text-white hover:bg-white/16",
+        variant === "ghost" && "text-white/70 hover:bg-white/8",
         variant === "outline" &&
-          "border border-zinc-700 text-zinc-100 hover:bg-zinc-900",
+          "border border-white/15 text-white hover:bg-white/8",
         variant === "danger" &&
           "bg-red-500/15 text-red-300 hover:bg-red-500/25",
         size === "sm" && "h-8 px-3 text-sm",
@@ -48,7 +48,7 @@ export function Input({
   return (
     <input
       className={cn(
-        "h-11 w-full rounded-xl border border-zinc-800 bg-zinc-950 px-3 text-sm text-zinc-100 outline-none ring-cyan-400/0 transition placeholder:text-zinc-600 focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/20",
+        "h-11 w-full rounded-full border border-white/10 bg-[#110814] px-4 text-sm text-white outline-none transition placeholder:text-white/35 focus:border-[#e8b44d]/60 focus:ring-2 focus:ring-[#e8b44d]/20",
         className,
       )}
       {...props}
@@ -63,7 +63,7 @@ export function Textarea({
   return (
     <textarea
       className={cn(
-        "min-h-24 w-full rounded-xl border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-zinc-100 outline-none transition placeholder:text-zinc-600 focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/20",
+        "min-h-24 w-full rounded-2xl border border-white/10 bg-[#110814] px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/35 focus:border-[#e8b44d]/60 focus:ring-2 focus:ring-[#e8b44d]/20",
         className,
       )}
       {...props}
@@ -77,7 +77,7 @@ export function Label({
 }: LabelHTMLAttributes<HTMLLabelElement>) {
   return (
     <label
-      className={cn("mb-1.5 block text-sm text-zinc-400", className)}
+      className={cn("mb-1.5 block text-sm text-white/55", className)}
       {...props}
     />
   );
@@ -90,7 +90,7 @@ export function Card({
   return (
     <div
       className={cn(
-        "rounded-2xl border border-zinc-800/80 bg-zinc-900/40 p-5",
+        "rounded-[28px] bg-white/5 p-5",
         className,
       )}
       {...props}

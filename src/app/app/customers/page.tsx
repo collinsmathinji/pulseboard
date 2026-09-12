@@ -2,6 +2,7 @@ import { requireSession, getWorkspace } from "@/lib/workspace";
 import { formatMoney } from "@/lib/utils";
 import { addCustomer, deleteCustomer } from "@/actions/workspace";
 import { Button, Card, Input, Label, Textarea } from "@/components/ui";
+import { PageKicker, PageTitle, PathToFive } from "@/components/portal";
 
 export default async function CustomersPage({
   searchParams,
@@ -12,29 +13,58 @@ export default async function CustomersPage({
   const workspace = await getWorkspace(session.user.id);
   const params = await searchParams;
   const remaining = Math.max(0, 5 - workspace.customers.length);
+  const total = workspace.customers.reduce(
+    (sum, customer) => sum + customer.amountCents,
+    0,
+  );
+  const average =
+    workspace.customers.length > 0
+      ? Math.round(total / workspace.customers.length)
+      : 0;
 
   return (
-    <div className="mx-auto max-w-5xl">
-      <p className="text-xs uppercase tracking-[0.2em] text-cyan-400">
-        Path to 5
+    <div className="mx-auto max-w-6xl pb-6">
+      <PageKicker>The book · {workspace.name}</PageKicker>
+      <PageTitle>Paying customers</PageTitle>
+      <p className="mt-3 max-w-xl text-sm leading-6 text-white/55">
+        Name, amount, date. The only list that matters before product-market
+        fit.
       </p>
-      <h1 className="mt-2 font-serif text-4xl text-zinc-50">
-        Paying customers
-      </h1>
-      <p className="mt-2 text-zinc-400">
-        {workspace.customers.length} logged
-        {remaining > 0
-          ? ` · ${remaining} to the milestone`
-          : " · milestone hit"}
-      </p>
+
+      <div className="mt-8 grid gap-3 sm:grid-cols-3">
+        <Card>
+          <p className="text-sm text-white/45">Logged</p>
+          <p className="mt-2 font-black text-3xl">{workspace.customers.length}</p>
+        </Card>
+        <Card>
+          <p className="text-sm text-white/45">Recorded revenue</p>
+          <p className="mt-2 font-black text-3xl">{formatMoney(total)}</p>
+        </Card>
+        <Card>
+          <p className="text-sm text-white/45">Average payment</p>
+          <p className="mt-2 font-black text-3xl">
+            {workspace.customers.length ? formatMoney(average) : "—"}
+          </p>
+        </Card>
+      </div>
+
+      <Card className="mt-4">
+        <PathToFive count={workspace.customers.length} />
+        <p className="mt-3 text-sm text-white/45">
+          {remaining > 0
+            ? `${remaining} more name${remaining === 1 ? "" : "s"} to the milestone.`
+            : "Milestone hit. Keep logging every payment."}
+        </p>
+      </Card>
+
       {params.error === "name" ? (
         <p className="mt-4 text-sm text-red-300">Name is required.</p>
       ) : null}
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-[320px_1fr]">
+      <div className="mt-4 grid gap-4 lg:grid-cols-[340px_1fr]">
         <Card>
-          <h2 className="font-serif text-2xl">Add a payment</h2>
-          <form action={addCustomer} className="mt-4 space-y-3">
+          <h2 className="font-black text-2xl tracking-tight">Add a payment</h2>
+          <form action={addCustomer} className="mt-5 space-y-3">
             <div>
               <Label htmlFor="name">Name</Label>
               <Input id="name" name="name" required placeholder="Alex from Northwind" />
@@ -68,25 +98,32 @@ export default async function CustomersPage({
 
         <Card>
           {workspace.customers.length === 0 ? (
-            <p className="text-zinc-500">
+            <p className="text-sm text-white/45">
               Your first paying user belongs here — even if it was $12.
             </p>
           ) : (
-            <ul className="divide-y divide-zinc-800">
+            <ul className="divide-y divide-white/8">
               {workspace.customers.map((customer) => (
                 <li
                   key={customer.id}
-                  className="flex flex-wrap items-center justify-between gap-3 py-3"
+                  className="flex flex-wrap items-center justify-between gap-3 py-4"
                 >
                   <div>
-                    <p className="text-zinc-100">{customer.name}</p>
-                    <p className="text-sm text-zinc-500">
+                    <p className="text-white">{customer.name}</p>
+                    <p className="mt-1 text-sm text-white/40">
                       {customer.email || "No email"} ·{" "}
-                      {customer.paidAt.toISOString().slice(0, 10)}
+                      {customer.paidAt.toLocaleDateString("en-GB", {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                      })}
                     </p>
+                    {customer.notes ? (
+                      <p className="mt-1 text-sm text-white/55">{customer.notes}</p>
+                    ) : null}
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="text-sm text-zinc-300">
+                    <span className="font-mono text-sm text-[#e8b44d]">
                       {formatMoney(customer.amountCents)}
                     </span>
                     <form action={deleteCustomer}>

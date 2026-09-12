@@ -14,7 +14,7 @@
 }
 
 html {
-  background: var(--background);
+  background: #16081f;
   scroll-behavior: smooth;
 }
 
@@ -39,7 +39,7 @@ body {
   --mute: rgba(255, 255, 255, 0.7);
   --paper: #16081f;
   color: var(--ink);
-  background: #4d82ff;
+  background: #16081f;
 }
 
 .landing-circle {

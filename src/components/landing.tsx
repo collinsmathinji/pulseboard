@@ -110,7 +110,7 @@ function SearchIcon() {
 
 export function SiteHeader() {
   return (
-    <header className="relative z-20 flex items-center justify-between px-6 py-5 md:px-10">
+    <header className="relative z-20 flex items-center justify-between px-6 py-5 md:px-12 lg:px-16">
       <Link
         href="/"
         className="inline-flex items-center gap-2 font-serif text-[22px] tracking-tight text-[#e8b44d]"
@@ -153,8 +153,8 @@ export function SiteHeader() {
 
 export function LandingPage() {
   return (
-    <div className="landing min-h-full px-3 py-4 sm:px-6 sm:py-7 lg:px-10">
-      <section className="relative mx-auto min-h-[min(860px,92svh)] max-w-[1280px] overflow-hidden rounded-[32px] bg-[#16081f] md:rounded-[40px]">
+    <div className="landing min-h-svh">
+      <section className="relative min-h-svh overflow-hidden bg-[#16081f]">
         <div className="absolute inset-0 grid md:grid-cols-2" aria-hidden>
           <div className="bg-[#16081f]" />
           <div className="bg-[#d8d8e2]" />
@@ -162,8 +162,8 @@ export function LandingPage() {
 
         <SiteHeader />
 
-        <div className="relative z-10 grid min-h-[calc(min(860px,92svh)-5.5rem)] md:grid-cols-2">
-          <div className="flex flex-col justify-center px-6 pb-28 pt-6 md:px-10 md:pr-48 md:pb-24 lg:pr-56">
+        <div className="relative z-10 grid min-h-[calc(100svh-5.5rem)] md:grid-cols-2">
+          <div className="flex flex-col justify-center px-6 pb-28 pt-6 md:px-12 md:pr-48 md:pb-24 lg:px-16 lg:pr-56">
             <h1 className="font-sans text-[clamp(3.4rem,7.4vw,6.8rem)] leading-[0.82] font-black tracking-[-0.045em] text-white">
               <span className="landing-rise block">THE</span>
               <span
@@ -189,7 +189,7 @@ export function LandingPage() {
             </a>
           </div>
 
-          <div className="relative flex flex-col justify-center px-6 pb-16 pt-48 text-[#16081f] md:px-10 md:pl-48 md:pt-6 md:pb-24 lg:pl-56">
+          <div className="relative flex flex-col justify-center px-6 pb-16 pt-48 text-[#16081f] md:px-12 md:pl-48 md:pt-6 md:pb-24 lg:px-16 lg:pl-56">
             <Link
               href="/login?next=/billing"
               className="landing-rise mb-10 ml-auto flex h-11 w-full max-w-[280px] items-center gap-3 rounded-full bg-white px-4 text-sm text-[#16081f]/55"
@@ -225,14 +225,14 @@ export function LandingPage() {
         </div>
 
         <div
-          className="absolute inset-x-0 bottom-0 z-10 h-11 rounded-b-[32px] bg-[#e8b44d] md:h-12 md:rounded-b-[40px]"
+          className="absolute inset-x-0 bottom-0 z-10 h-2 bg-[#e8b44d]"
           aria-hidden
         />
       </section>
 
       <section
         id="ritual"
-        className="mx-auto mt-6 max-w-[1280px] scroll-mt-8 rounded-[32px] bg-[#16081f] px-6 py-16 text-white md:mt-8 md:rounded-[40px] md:px-16 md:py-24"
+        className="scroll-mt-8 bg-[#16081f] px-6 py-20 text-white md:px-16 md:py-28"
       >
         <Reveal>
           <p className="text-sm text-white/50">The ritual</p>
@@ -259,7 +259,7 @@ export function LandingPage() {
 
       <section
         id="pricing"
-        className="mx-auto mt-6 max-w-[1280px] scroll-mt-8 overflow-hidden rounded-[32px] bg-[#d8d8e2] md:mt-8 md:rounded-[40px]"
+        className="scroll-mt-8 overflow-hidden bg-[#d8d8e2]"
       >
         <div className="grid md:grid-cols-2">
           <Reveal className="px-6 py-14 md:px-16 md:py-20">
@@ -297,7 +297,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      <footer className="mx-auto max-w-[1280px] px-6 py-10 text-center text-sm text-[#e8b44d]/90">
+      <footer className="bg-[#16081f] px-6 py-10 text-center text-sm text-[#e8b44d]/90">
         Pulseboard · Nairobi · write the numbers down
       </footer>
     </div>

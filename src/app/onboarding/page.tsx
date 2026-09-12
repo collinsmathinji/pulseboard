@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { requireSession, getWorkspace, isPaid } from "@/lib/workspace";
 import { completeOnboarding } from "@/actions/workspace";
 import { Button, Input, Label } from "@/components/ui";
+import { StandaloneCard, PageKicker, PageTitle } from "@/components/portal";
 
 export default async function OnboardingPage() {
   const session = await requireSession();
@@ -10,13 +11,12 @@ export default async function OnboardingPage() {
   if (workspace.onboardingComplete) redirect("/app");
 
   return (
-    <div className="mx-auto flex min-h-full max-w-lg flex-col justify-center px-6 py-16">
-      <p className="text-xs uppercase tracking-[0.2em] text-cyan-400">
-        Setup
+    <StandaloneCard className="max-w-xl">
+      <PageKicker>Setup</PageKicker>
+      <PageTitle className="mt-3">Name the company.</PageTitle>
+      <p className="mt-3 text-sm leading-6 text-white/55">
+        Log the numbers you already know. You can change them every Monday.
       </p>
-      <h1 className="mt-3 font-serif text-4xl text-zinc-50">
-        Name the company. Log the numbers you already know.
-      </h1>
       <form action={completeOnboarding} className="mt-8 space-y-4">
         <div>
           <Label htmlFor="name">Startup name</Label>
@@ -69,6 +69,6 @@ export default async function OnboardingPage() {
           Open my scorecard
         </Button>
       </form>
-    </div>
+    </StandaloneCard>
   );
 }

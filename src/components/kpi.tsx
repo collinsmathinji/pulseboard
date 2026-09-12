@@ -1,7 +1,13 @@
-export function Sparkline({ points }: { points: number[] }) {
+export function Sparkline({
+  points,
+  className,
+}: {
+  points: number[];
+  className?: string;
+}) {
   if (points.length < 2) {
     return (
-      <p className="text-sm text-zinc-500">
+      <p className="text-sm text-white/45">
         Log a weekly review to see the trend.
       </p>
     );
@@ -11,21 +17,23 @@ export function Sparkline({ points }: { points: number[] }) {
   const max = Math.max(...points);
   const range = max - min || 1;
   const w = 320;
-  const h = 64;
+  const h = 96;
   const path = points
     .map((p, i) => {
       const x = (i / (points.length - 1)) * w;
-      const y = h - ((p - min) / range) * (h - 8) - 4;
+      const y = h - ((p - min) / range) * (h - 12) - 6;
       return `${i === 0 ? "M" : "L"}${x.toFixed(1)},${y.toFixed(1)}`;
     })
     .join(" ");
+  const area = `${path} L${w},${h} L0,${h} Z`;
 
   return (
     <svg
       viewBox={`0 0 ${w} ${h}`}
-      className="h-16 w-full text-cyan-400"
+      className={className ?? "h-24 w-full text-[#e8b44d]"}
       aria-hidden
     >
+      <path d={area} fill="currentColor" className="opacity-15" />
       <path
         d={path}
         fill="none"
@@ -48,12 +56,12 @@ export function KpiCard({
   hint?: string;
 }) {
   return (
-    <div className="rounded-2xl border border-zinc-800/80 bg-zinc-900/40 p-4">
-      <p className="text-xs uppercase tracking-[0.16em] text-zinc-500">
-        {label}
+    <div className="rounded-[24px] bg-white/5 p-5">
+      <p className="text-sm text-white/45">{label}</p>
+      <p className="mt-2 font-sans text-3xl font-black tracking-tight text-white">
+        {value}
       </p>
-      <p className="mt-2 font-serif text-3xl text-zinc-50">{value}</p>
-      {hint ? <p className="mt-1 text-sm text-zinc-500">{hint}</p> : null}
+      {hint ? <p className="mt-2 text-sm text-[#e8b44d]">{hint}</p> : null}
     </div>
   );
 }

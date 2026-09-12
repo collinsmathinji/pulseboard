@@ -31,7 +31,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${instrument.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-[#06080c] text-slate-100">
+      <body className="min-h-full bg-[#16081f] text-slate-100">
         <Script
           src="https://vayahq.com/b/3b43368419783db58ac44cd3b4c2586a.js"
           strategy="beforeInteractive"
