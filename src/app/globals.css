@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #09090b;
-  --foreground: #f4f4f5;
+  --background: #06080c;
+  --foreground: #e8eef7;
 }
 
 @theme inline {
@@ -15,6 +15,13 @@
 
 html {
   background: var(--background);
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
@@ -25,4 +32,177 @@ body {
 
 .font-serif {
   font-family: var(--font-instrument), ui-serif, Georgia, serif;
+}
+
+.landing {
+  --ink: #e8eef7;
+  --mute: #8b95a7;
+  --rule: rgba(103, 232, 249, 0.16);
+  --paper: #0a0e14;
+  color: var(--ink);
+  background: #06080c;
+}
+
+.landing-grid {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse at 50% 0%, #000 20%, transparent 72%);
+}
+
+.landing-grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.landing-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(70px);
+  animation: landing-drift 16s ease-in-out infinite;
+}
+
+.landing-rise {
+  animation: landing-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.landing-draw {
+  stroke-dasharray: 480;
+  stroke-dashoffset: 480;
+  animation: landing-draw 1.6s 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.landing-fill {
+  transform-origin: left center;
+  animation: landing-fill 1.1s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.landing-bar {
+  transform-origin: left center;
+  animation: landing-fill 1.4s 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.landing-check {
+  display: inline-block;
+  animation: landing-check 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.landing-caret {
+  animation: landing-blink 1s steps(1) infinite;
+}
+
+.landing-float {
+  animation: landing-float 7s ease-in-out infinite;
+}
+
+.landing-in {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.landing-in.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes landing-rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes landing-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes landing-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes landing-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(6%, 8%, 0) scale(1.08);
+  }
+}
+
+@keyframes landing-blink {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes landing-check {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes landing-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-orb,
+  .landing-rise,
+  .landing-draw,
+  .landing-fill,
+  .landing-bar,
+  .landing-check,
+  .landing-caret,
+  .landing-float {
+    animation: none;
+  }
+
+  .landing-draw {
+    stroke-dashoffset: 0;
+  }
+
+  .landing-in {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
