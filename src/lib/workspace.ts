@@ -10,7 +10,31 @@ export async function requireSession() {
   return session;
 }
 
+async function ensureUser(userId: string) {
+  const existing = await prisma.user.findUnique({ where: { id: userId } });
+  if (existing) return existing;
+
+  const session = await auth();
+  const email =
+    session?.user?.id === userId
+      ? session.user.email?.trim().toLowerCase() || undefined
+      : undefined;
+  const name =
+    session?.user?.name ?? email?.split("@")[0] ?? "Founder";
+
+  try {
+    return await prisma.user.create({
+      data: { id: userId, email, name },
+    });
+  } catch {
+    return prisma.user.create({
+      data: { id: userId, name },
+    });
+  }
+}
+
 export async function getWorkspace(userId: string) {
+  await ensureUser(userId);
   return prisma.workspace.upsert({
     where: { userId },
     update: {},

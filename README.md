@@ -11,17 +11,7 @@ npm install
 cp .env.example .env
 ```
 
-Set at least:
-
-```
-DATABASE_URL="file:./dev.db"
-AUTH_SECRET="<random 32+ bytes>"
-AUTH_URL="http://localhost:3000"
-AUTH_ALLOW_EMAIL_LOGIN="true"
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
-```
-
-Then:
+Set at least the keys in `.env.example`. Point `DATABASE_URL` and `DIRECT_URL` at the Pulseboard Supabase project (Connect → ORM → Prisma). Then:
 
 ```bash
 npx prisma db push
@@ -34,7 +24,8 @@ Open [http://localhost:3000](http://localhost:3000). Sign in with any email (ins
 
 | Variable | Required | Purpose |
 |---|---|---|
-| `DATABASE_URL` | yes | SQLite file locally. Neon Postgres URL in production. |
+| `DATABASE_URL` | yes | Supabase transaction pooler (`:6543`, `pgbouncer=true`) |
+| `DIRECT_URL` | yes | Supabase session pooler (`:5432`) for `prisma db push` |
 | `AUTH_SECRET` | yes | Auth.js session secret |
 | `AUTH_URL` | yes | App origin |
 | `AUTH_ALLOW_EMAIL_LOGIN` | recommended until OAuth is live | Instant email sign-in |
@@ -53,14 +44,12 @@ node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"
 
 ## Production database
 
-Prisma is configured for **SQLite**. Vercel serverless cannot persist a SQLite file.
+Prisma talks to **Supabase Postgres**. Users, workspaces, customers, weekly reviews, and metric snapshots live in that database, so they survive deploys and server restarts.
 
-Before a real deploy:
-
-1. Create a [Neon](https://neon.tech) Postgres database
-2. In `prisma/schema.prisma`, set `provider = "postgresql"`
-3. Set `DATABASE_URL` to the Neon URL
-4. Run `npx prisma db push` against production (or `prisma migrate deploy`)
+1. Open the Pulseboard project in [Supabase](https://supabase.com/dashboard)
+2. Connect → ORM → Prisma, copy `DATABASE_URL` (port `6543`) and `DIRECT_URL` (port `5432`)
+3. Put both in `.env` locally and in the Vercel project env
+4. Run `npx prisma db push` once against that database
 
 ## Vercel
 

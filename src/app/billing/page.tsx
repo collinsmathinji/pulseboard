@@ -3,6 +3,7 @@ import { requireSession, getWorkspace, isPaid } from "@/lib/workspace";
 import { BrandMark } from "@/components/brand";
 import { Button } from "@/components/ui";
 import { stripeConfigured } from "@/lib/stripe";
+import { unlockLocalPlan } from "@/actions/workspace";
 import { PortalCanvas, PageKicker, PageTitle } from "@/components/portal";
 import Link from "next/link";
 
@@ -47,7 +48,7 @@ export default async function BillingPage() {
         ) : (
           <div className="mt-8 grid gap-3 md:grid-cols-2">
             <form
-              action="/api/stripe/checkout"
+              action={stripeConfigured() ? "/api/stripe/checkout" : unlockLocalPlan}
               method="post"
               className="rounded-[28px] bg-white/5 p-6"
             >
@@ -65,7 +66,7 @@ export default async function BillingPage() {
               </Button>
             </form>
             <form
-              action="/api/stripe/checkout"
+              action={stripeConfigured() ? "/api/stripe/checkout" : unlockLocalPlan}
               method="post"
               className="rounded-[28px] bg-[#d8d8e2] p-6 text-[#16081f]"
             >

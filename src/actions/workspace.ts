@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { requireSession, getWorkspace, isPaid } from "@/lib/workspace";
 import { prisma } from "@/lib/prisma";
+import { stripeConfigured } from "@/lib/stripe";
 import { dollarsToCents } from "@/lib/utils";
 
 const onboardingSchema = z.object({
@@ -14,6 +15,25 @@ const onboardingSchema = z.object({
   runwayMonths: z.string(),
   weeklyGoal: z.string().max(200),
 });
+
+export async function unlockLocalPlan(formData: FormData) {
+  const session = await requireSession();
+  const workspace = await getWorkspace(session.user.id);
+  if (stripeConfigured()) {
+    redirect("/billing");
+  }
+
+  const annual = String(formData.get("plan") ?? "monthly") === "annual";
+  await prisma.workspace.update({
+    where: { id: workspace.id },
+    data: {
+      planStatus: "active",
+      planInterval: annual ? "year" : "month",
+    },
+  });
+
+  redirect(workspace.onboardingComplete ? "/app" : "/onboarding");
+}
 
 export async function completeOnboarding(formData: FormData) {
   const session = await requireSession();

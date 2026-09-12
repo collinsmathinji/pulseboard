@@ -13,7 +13,7 @@ You own the product until you accept an offer. I cannot log into Vaya or send DM
 
 ## 2. Go live
 
-1. Add Stripe **live** keys and a Neon Postgres URL
+1. Add Stripe **live** keys and the Supabase `DATABASE_URL` / `DIRECT_URL`
 2. Deploy to Vercel
 3. Buy a domain if you want (optional)
 4. Pay once yourself so the checkout path is proven (this can count as user #1 only if Vaya allows founder purchases — prefer strangers)
