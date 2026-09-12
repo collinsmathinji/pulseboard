@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Button } from "@/components/ui";
+import { SocialLinks } from "@/components/social";
 import { cn } from "@/lib/utils";
 
 const RITUAL = [
@@ -298,8 +299,11 @@ export function LandingPage() {
         </div>
       </section>
 
-      <footer className="bg-[#16081f] px-6 py-10 text-center text-sm text-[#e8b44d]/90">
-        Pulseboard · Nairobi · write the numbers down
+      <footer className="bg-[#16081f] px-6 py-10 text-center">
+        <SocialLinks className="mb-4" />
+        <p className="text-sm text-[#e8b44d]/90">
+          Pulseboard · Nairobi · write the numbers down
+        </p>
       </footer>
     </div>
   );

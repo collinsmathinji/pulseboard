@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { AnalyticsScripts } from "@/components/analytics";
+import { SiteJsonLd } from "@/components/social";
+import {
+  siteAnalytics,
+  siteTwitterHandle,
+  siteUrl,
+} from "@/lib/integrations";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -19,10 +26,40 @@ const instrument = Instrument_Serif({
   weight: "400",
 });
 
+const site = siteUrl();
+const twitter = siteTwitterHandle();
+
 export const metadata: Metadata = {
+  metadataBase: new URL(site),
   title: "Pulseboard — the weekly scorecard for founders",
   description:
     "One screen for MRR, paying users, runway, and this week's three priorities. $12/month.",
+  applicationName: "Pulseboard",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: site,
+    siteName: "Pulseboard",
+    title: "Pulseboard — the weekly scorecard for founders",
+    description:
+      "One Monday page for MRR, paying users, runway, and the three things that have to move.",
+    images: [
+      {
+        url: "/hero-founder.png",
+        width: 1200,
+        height: 1200,
+        alt: "A founder walking to write the week’s numbers",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Pulseboard — the weekly scorecard for founders",
+    description:
+      "One Monday page for MRR, paying users, runway, and the three things that have to move.",
+    images: ["/hero-founder.png"],
+    ...(twitter ? { site: twitter, creator: twitter } : {}),
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -36,6 +73,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           src="https://vayahq.com/b/3b43368419783db58ac44cd3b4c2586a.js"
           strategy="beforeInteractive"
         />
+        <AnalyticsScripts {...siteAnalytics()} />
+        <SiteJsonLd />
         {children}
       </body>
     </html>

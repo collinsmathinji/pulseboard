@@ -12,6 +12,8 @@ import {
   formatWeekStamp,
   isoWeek,
 } from "@/components/portal";
+import { ShareRow } from "@/components/social";
+import { integrationCount, workspaceSocial } from "@/lib/integrations";
 
 export default async function DashboardPage() {
   const session = await requireSession();
@@ -48,6 +50,8 @@ export default async function DashboardPage() {
       ).filter(([text]) => Boolean(text))
     : [];
   const doneCount = priorities.filter(([, done]) => done).length;
+  const systems = integrationCount(workspace);
+  const social = workspaceSocial(workspace);
   const ritual = [
     {
       n: "01",
@@ -100,6 +104,58 @@ export default async function DashboardPage() {
       </div>
 
       <Card className="mt-8">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-sm text-white/45">Connected systems</p>
+            <p className="mt-1 text-sm text-white/70">
+              {systems.connected === 0
+                ? "Analytics, Stripe, and social are empty slots."
+                : `${systems.connected} of 3 slots live.`}
+            </p>
+          </div>
+          <Link href="/app/integrations">
+            <Button variant="outline">Open integrations</Button>
+          </Link>
+        </div>
+        <div className="mt-4 grid gap-2 sm:grid-cols-3">
+          {(
+            [
+              [
+                "Analytics",
+                systems.analytics,
+                workspace.gaMeasurementId ||
+                  workspace.gtmContainerId ||
+                  "Not connected",
+              ],
+              [
+                "Stripe",
+                systems.stripe,
+                workspace.planStatus === "active" ? "Plan active" : "Unpaid",
+              ],
+              [
+                "Social",
+                systems.social,
+                social.length ? social.map((link) => link.label).join(" · ") : "No profiles",
+              ],
+            ] as const
+          ).map(([label, on, detail]) => (
+            <div key={label} className="rounded-2xl bg-white/4 px-4 py-3">
+              <p className="text-sm text-[#e8b44d]">{on ? "Live" : "Slot"}</p>
+              <p className="mt-1 font-medium">{label}</p>
+              <p className="mt-1 text-sm text-white/45">{detail}</p>
+            </div>
+          ))}
+        </div>
+        {social.length > 0 ? (
+          <div className="mt-4">
+            <ShareRow
+              text={`${workspace.name} writes the week on one Pulseboard page.`}
+            />
+          </div>
+        ) : null}
+      </Card>
+
+      <Card className="mt-4">
         <PathToFive count={workspace.payingUsers} />
         <p className="mt-3 text-sm text-white/55">
           {remaining > 0 ? (

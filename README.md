@@ -30,6 +30,8 @@ Open [http://localhost:3000](http://localhost:3000). Sign in with any email (ins
 | `AUTH_URL` | yes | App origin |
 | `AUTH_ALLOW_EMAIL_LOGIN` | recommended until OAuth is live | Instant email sign-in |
 | `NEXT_PUBLIC_APP_URL` | yes | Stripe return URLs |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` / `NEXT_PUBLIC_GTM_ID` | optional | Site-wide Analytics / Tag Manager |
+| `NEXT_PUBLIC_X_HANDLE` / `NEXT_PUBLIC_*_URL` | optional | Landing social links + Open Graph |
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | optional | Google sign-in |
 | `RESEND_API_KEY` / `EMAIL_FROM` | optional | Magic-link email |
 | `STRIPE_SECRET_KEY` | yes for real payments | Checkout + portal |

@@ -67,6 +67,14 @@ model Workspace {
   stripeSubscriptionId String?
   planStatus           String           @default("unpaid")
   planInterval         String?
+  gaMeasurementId      String           @default("")
+  gtmContainerId       String           @default("")
+  socialX              String           @default("")
+  socialLinkedin       String           @default("")
+  socialInstagram      String           @default("")
+  socialFacebook       String           @default("")
+  socialYoutube        String           @default("")
+  socialWebsite        String           @default("")
   snapshots            MetricSnapshot[]
   customers            Customer[]
   reviews              WeeklyReview[]
