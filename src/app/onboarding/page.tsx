@@ -11,7 +11,7 @@ export default async function OnboardingPage() {
 
   return (
     <div className="mx-auto flex min-h-full max-w-lg flex-col justify-center px-6 py-16">
-      <p className="text-xs uppercase tracking-[0.2em] text-amber-400">
+      <p className="text-xs uppercase tracking-[0.2em] text-cyan-400">
         Setup
       </p>
       <h1 className="mt-3 font-serif text-4xl text-zinc-50">

@@ -10,7 +10,7 @@ export default async function ReviewPage() {
 
   return (
     <div className="mx-auto max-w-3xl">
-      <p className="text-xs uppercase tracking-[0.2em] text-amber-400">
+      <p className="text-xs uppercase tracking-[0.2em] text-cyan-400">
         Ritual
       </p>
       <h1 className="mt-2 font-serif text-4xl text-zinc-50">Weekly review</h1>

@@ -16,7 +16,7 @@ export default async function DashboardPage() {
     <div className="mx-auto max-w-5xl">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-amber-400">
+          <p className="text-xs uppercase tracking-[0.2em] text-cyan-400">
             Overview
           </p>
           <h1 className="mt-2 font-serif text-4xl text-zinc-50">
@@ -29,7 +29,7 @@ export default async function DashboardPage() {
       </div>
 
       {remaining > 0 ? (
-        <div className="mt-6 rounded-2xl border border-amber-400/30 bg-amber-400/8 px-4 py-3 text-sm text-amber-100">
+        <div className="mt-6 rounded-2xl border border-cyan-400/30 bg-cyan-400/8 px-4 py-3 text-sm text-cyan-100">
           {remaining} more paying user{remaining === 1 ? "" : "s"} to hit 5.
           Log them in{" "}
           <Link href="/app/customers" className="underline">
@@ -96,7 +96,7 @@ export default async function DashboardPage() {
                         type="submit"
                         className="flex w-full items-start gap-2 text-left text-zinc-200"
                       >
-                        <span className="mt-0.5 h-4 w-4 rounded border border-zinc-600 text-center text-[10px] text-amber-400">
+                        <span className="mt-0.5 h-4 w-4 rounded border border-zinc-600 text-center text-[10px] text-cyan-400">
                           {done ? "✓" : ""}
                         </span>
                         <span className={done ? "text-zinc-500 line-through" : ""}>
@@ -118,7 +118,7 @@ export default async function DashboardPage() {
       <Card className="mt-4">
         <div className="flex items-center justify-between">
           <p className="text-sm text-zinc-400">Recent paying customers</p>
-          <Link href="/app/customers" className="text-sm text-amber-300">
+          <Link href="/app/customers" className="text-sm text-cyan-300">
             View all
           </Link>
         </div>
