@@ -33,7 +33,7 @@ export function AppNav({
             height={28}
             className="rounded-md"
           />
-          <span className="font-serif text-xl text-amber-300">Pulseboard</span>
+          <span className="font-serif text-xl text-cyan-300">Pulseboard</span>
         </Link>
         <p className="hidden text-sm text-zinc-500 lg:mt-1 lg:block">
           {workspaceName}

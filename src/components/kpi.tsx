@@ -23,7 +23,7 @@ export function Sparkline({ points }: { points: number[] }) {
   return (
     <svg
       viewBox={`0 0 ${w} ${h}`}
-      className="h-16 w-full text-amber-400"
+      className="h-16 w-full text-cyan-400"
       aria-hidden
     >
       <path

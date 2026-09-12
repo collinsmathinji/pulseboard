@@ -23,7 +23,7 @@ export function Button({
       className={cn(
         "inline-flex items-center justify-center gap-2 rounded-full font-medium transition disabled:opacity-50 disabled:pointer-events-none",
         variant === "primary" &&
-          "bg-amber-400 text-zinc-950 hover:bg-amber-300",
+          "bg-cyan-300 text-slate-950 hover:bg-cyan-200",
         variant === "secondary" &&
           "bg-zinc-800 text-zinc-100 hover:bg-zinc-700",
         variant === "ghost" && "text-zinc-300 hover:bg-zinc-800",
@@ -48,7 +48,7 @@ export function Input({
   return (
     <input
       className={cn(
-        "h-11 w-full rounded-xl border border-zinc-800 bg-zinc-950 px-3 text-sm text-zinc-100 outline-none ring-amber-400/0 transition placeholder:text-zinc-600 focus:border-amber-400/50 focus:ring-2 focus:ring-amber-400/20",
+        "h-11 w-full rounded-xl border border-zinc-800 bg-zinc-950 px-3 text-sm text-zinc-100 outline-none ring-cyan-400/0 transition placeholder:text-zinc-600 focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/20",
         className,
       )}
       {...props}
@@ -63,7 +63,7 @@ export function Textarea({
   return (
     <textarea
       className={cn(
-        "min-h-24 w-full rounded-xl border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-zinc-100 outline-none transition placeholder:text-zinc-600 focus:border-amber-400/50 focus:ring-2 focus:ring-amber-400/20",
+        "min-h-24 w-full rounded-xl border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-zinc-100 outline-none transition placeholder:text-zinc-600 focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/20",
         className,
       )}
       {...props}
