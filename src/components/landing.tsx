@@ -182,13 +182,23 @@ export function LandingPage() {
                 One Monday page for MRR, paying users, runway, and the three
                 things that have to move.
               </p>
-              <a
-                href="#ritual"
-                className="landing-rise mt-6 inline-flex h-10 w-fit items-center rounded-full bg-[#e8b44d] px-5 text-sm font-medium text-[#16081f]"
+              <div
+                className="landing-rise mt-6 flex flex-wrap items-center gap-3"
                 style={{ animationDelay: "240ms" }}
               >
-                Learn more
-              </a>
+                <a
+                  href="#ritual"
+                  className="inline-flex h-10 w-fit items-center rounded-full bg-[#e8b44d] px-5 text-sm font-medium text-[#16081f]"
+                >
+                  Learn more
+                </a>
+                <a
+                  href="#demo"
+                  className="inline-flex h-10 w-fit items-center rounded-full px-5 text-sm font-medium text-white/75 ring-1 ring-white/20 hover:text-white"
+                >
+                  Watch the demo
+                </a>
+              </div>
             </div>
 
             <div className="relative flex flex-col justify-center px-6 pb-16 pt-40 text-[#16081f] md:pt-8 md:pr-8 md:pb-20 md:pl-36">
@@ -259,6 +269,46 @@ export function LandingPage() {
               </Reveal>
             ))}
           </ol>
+        </div>
+      </section>
+
+      <section
+        id="demo"
+        className="scroll-mt-8 bg-[#16081f] px-6 pb-20 text-white md:pb-24"
+      >
+        <div className="mx-auto max-w-6xl">
+          <Reveal>
+            <p className="text-sm text-white/50">Watch it</p>
+            <h2 className="mt-3 max-w-xl font-sans text-4xl leading-[0.95] font-black tracking-tight md:text-5xl">
+              The Monday page, in one minute.
+            </h2>
+            <p className="mt-4 max-w-md text-sm leading-7 text-white/65">
+              Landing, sign-in, the scorecard, customers, the weekly review, and
+              the systems you already use.
+            </p>
+          </Reveal>
+          <Reveal delay={80} className="mt-8">
+            <div className="overflow-hidden rounded-[2rem] bg-black ring-2 ring-[#e8b44d]/80">
+              <video
+                className="aspect-video w-full"
+                controls
+                playsInline
+                preload="metadata"
+                poster="/demo-poster.jpg"
+                aria-label="Pulseboard product demo"
+              >
+                <source src="/demo.mp4" type="video/mp4" />
+                <track
+                  src="/demo.vtt"
+                  kind="captions"
+                  srcLang="en"
+                  label="English"
+                  default
+                />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </Reveal>
         </div>
       </section>
 

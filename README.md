@@ -20,6 +20,8 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000). Sign in with any email (instant login while `AUTH_ALLOW_EMAIL_LOGIN=true`). Without Stripe keys, the $12 checkout **unlocks the app locally** and does not charge a card.
 
+The landing page plays `public/demo.mp4`. Re-record it with `npm run demo:record` while `npm run dev` is up.
+
 ## Environment keys
 
 | Variable | Required | Purpose |

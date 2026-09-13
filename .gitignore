@@ -40,6 +40,9 @@ yarn-error.log*
 *.db-journal
 /prisma/dev.db
 
+# demo recording scratch
+/scripts/.demo-raw
+
 # vercel
 .vercel
 
