@@ -95,6 +95,60 @@ function MenuIcon() {
   );
 }
 
+function DemoPlayer() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [playing, setPlaying] = useState(false);
+
+  function play() {
+    const video = videoRef.current;
+    if (!video) return;
+    void video.play().then(() => setPlaying(true));
+  }
+
+  return (
+    <div className="relative mt-8 overflow-hidden rounded-[2rem] bg-[#16081f] shadow-[0_24px_80px_rgba(22,8,31,0.28)] ring-2 ring-[#e8b44d]">
+      <video
+        ref={videoRef}
+        className="aspect-video w-full bg-[#16081f]"
+        controls={playing}
+        playsInline
+        preload="auto"
+        poster="/demo-poster.jpg"
+        aria-label="Pulseboard product demo"
+        onPlay={() => setPlaying(true)}
+        onPause={() => setPlaying(false)}
+        onEnded={() => setPlaying(false)}
+      >
+        <source src="/demo.mp4" type="video/mp4" />
+        <track
+          src="/demo.vtt"
+          kind="captions"
+          srcLang="en"
+          label="English"
+          default
+        />
+        Your browser does not support the video tag.
+      </video>
+      {playing ? null : (
+        <button
+          type="button"
+          onClick={play}
+          className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[#16081f]/20 text-white"
+        >
+          <span className="flex h-16 w-16 items-center justify-center rounded-full bg-[#e8b44d] text-[#16081f] shadow-lg">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="currentColor" aria-hidden>
+              <path d="M8 5.8v10.4L17 11 8 5.8Z" />
+            </svg>
+          </span>
+          <span className="rounded-full bg-[#16081f] px-4 py-1.5 text-sm font-medium text-[#e8b44d]">
+            Play the 1-minute demo
+          </span>
+        </button>
+      )}
+    </div>
+  );
+}
+
 function SearchIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
@@ -126,6 +180,12 @@ export function SiteHeader() {
         pulseboard
       </Link>
       <nav className="flex items-center gap-3 text-[#16081f] md:gap-4">
+        <a
+          href="#demo"
+          className="hidden items-center rounded-full px-3 text-sm font-medium text-[#16081f]/70 hover:bg-[#16081f]/8 hover:text-[#16081f] sm:inline-flex"
+        >
+          Demo
+        </a>
         <a
           href="#ritual"
           className="hidden h-9 w-9 items-center justify-center rounded-full hover:bg-[#16081f]/8 sm:flex"
@@ -194,7 +254,7 @@ export function LandingPage() {
                 </a>
                 <a
                   href="#demo"
-                  className="inline-flex h-10 w-fit items-center rounded-full px-5 text-sm font-medium text-white/75 ring-1 ring-white/20 hover:text-white"
+                  className="inline-flex h-10 w-fit items-center rounded-full bg-white px-5 text-sm font-medium text-[#16081f]"
                 >
                   Watch the demo
                 </a>
@@ -244,6 +304,23 @@ export function LandingPage() {
       </section>
 
       <section
+        id="demo"
+        className="scroll-mt-24 bg-[#d8d8e2] px-6 py-16 text-[#16081f] md:py-20"
+      >
+        <div className="mx-auto max-w-6xl">
+          <p className="text-sm text-[#16081f]/50">Watch it</p>
+          <h2 className="mt-3 max-w-xl font-sans text-4xl leading-[0.95] font-black tracking-tight md:text-5xl">
+            The Monday page, in one minute.
+          </h2>
+          <p className="mt-4 max-w-md text-sm leading-7 text-[#16081f]/65">
+            Landing, sign-in, the scorecard, customers, the weekly review, and
+            the systems you already use.
+          </p>
+          <DemoPlayer />
+        </div>
+      </section>
+
+      <section
         id="ritual"
         className="scroll-mt-8 bg-[#16081f] px-6 py-20 text-white md:py-24"
       >
@@ -269,46 +346,6 @@ export function LandingPage() {
               </Reveal>
             ))}
           </ol>
-        </div>
-      </section>
-
-      <section
-        id="demo"
-        className="scroll-mt-8 bg-[#16081f] px-6 pb-20 text-white md:pb-24"
-      >
-        <div className="mx-auto max-w-6xl">
-          <Reveal>
-            <p className="text-sm text-white/50">Watch it</p>
-            <h2 className="mt-3 max-w-xl font-sans text-4xl leading-[0.95] font-black tracking-tight md:text-5xl">
-              The Monday page, in one minute.
-            </h2>
-            <p className="mt-4 max-w-md text-sm leading-7 text-white/65">
-              Landing, sign-in, the scorecard, customers, the weekly review, and
-              the systems you already use.
-            </p>
-          </Reveal>
-          <Reveal delay={80} className="mt-8">
-            <div className="overflow-hidden rounded-[2rem] bg-black ring-2 ring-[#e8b44d]/80">
-              <video
-                className="aspect-video w-full"
-                controls
-                playsInline
-                preload="metadata"
-                poster="/demo-poster.jpg"
-                aria-label="Pulseboard product demo"
-              >
-                <source src="/demo.mp4" type="video/mp4" />
-                <track
-                  src="/demo.vtt"
-                  kind="captions"
-                  srcLang="en"
-                  label="English"
-                  default
-                />
-                Your browser does not support the video tag.
-              </video>
-            </div>
-          </Reveal>
         </div>
       </section>
 
