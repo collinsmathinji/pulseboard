@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Caveat, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { AnalyticsScripts } from "@/components/analytics";
 import { SiteJsonLd } from "@/components/social";
 import {
@@ -24,6 +24,12 @@ const instrument = Instrument_Serif({
   variable: "--font-instrument",
   subsets: ["latin"],
   weight: "400",
+});
+
+const caveat = Caveat({
+  variable: "--font-hand",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const site = siteUrl();
@@ -66,9 +72,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${instrument.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${instrument.variable} ${caveat.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-[#16081f] text-slate-100">
+      <body className="min-h-full bg-[#e8e6e1] text-[#171a16]">
         <Script
           src="https://vayahq.com/b/3b43368419783db58ac44cd3b4c2586a.js"
           strategy="beforeInteractive"

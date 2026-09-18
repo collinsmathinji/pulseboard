@@ -24,8 +24,8 @@ export function SocialLinks({
             rel="me noopener noreferrer"
             className={
               tone === "gold"
-                ? "text-sm text-[#e8b44d]/90 underline-offset-4 hover:underline"
-                : "text-sm text-[#16081f]/70 underline-offset-4 hover:underline"
+                ? "text-sm text-[#b8922a] underline-offset-4 hover:underline"
+                : "text-sm text-[#5c635c] underline-offset-4 hover:underline"
             }
           >
             {link.label}

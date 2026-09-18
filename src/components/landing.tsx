@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { Button } from "@/components/ui";
 import { SocialLinks } from "@/components/social";
 import { DEMO_FOUNDERS } from "@/lib/demos";
 import { cn } from "@/lib/utils";
@@ -27,7 +26,6 @@ const RITUAL = [
 ] as const;
 
 const FEATURED = DEMO_FOUNDERS[0];
-const TESTIMONIALS = DEMO_FOUNDERS;
 
 function useInView<T extends HTMLElement>() {
   const ref = useRef<T>(null);
@@ -43,7 +41,7 @@ function useInView<T extends HTMLElement>() {
           observer.disconnect();
         }
       },
-      { threshold: 0.18 },
+      { threshold: 0.16 },
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -73,19 +71,6 @@ function Reveal({
   );
 }
 
-function HomeIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
-      <path
-        d="M2.5 7.2 8 2.8l5.5 4.4V13a.8.8 0 0 1-.8.8H9.2V10H6.8v3.8H3.3A.8.8 0 0 1 2.5 13V7.2Z"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 function DemoPlayer() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
@@ -97,10 +82,10 @@ function DemoPlayer() {
   }
 
   return (
-    <div className="relative mt-8 overflow-hidden rounded-[2rem] bg-[#16081f] shadow-[0_24px_80px_rgba(22,8,31,0.28)] ring-2 ring-[#e8b44d]">
+    <div className="relative mt-8 overflow-hidden border border-[var(--rule)] bg-[var(--ink)]">
       <video
         ref={videoRef}
-        className="aspect-video w-full bg-[#16081f]"
+        className="aspect-video w-full bg-[var(--ink)]"
         controls={playing}
         playsInline
         preload="auto"
@@ -118,18 +103,17 @@ function DemoPlayer() {
           label="English"
           default
         />
-        Your browser does not support the video tag.
       </video>
       {playing ? null : (
         <button
           type="button"
           onClick={play}
-          className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[#16081f]/20 text-white transition hover:bg-[#16081f]/10"
+          className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[var(--ink)]/25 text-[var(--sheet)] transition hover:bg-[var(--ink)]/15"
         >
-          <span className="landing-float flex h-16 w-16 items-center justify-center rounded-full bg-[#e8b44d] text-[#16081f] shadow-lg">
+          <span className="landing-float flex h-14 w-14 items-center justify-center bg-[var(--brass)] text-[var(--ink)]">
             <svg
-              width="22"
-              height="22"
+              width="20"
+              height="20"
               viewBox="0 0 22 22"
               fill="currentColor"
               aria-hidden
@@ -137,7 +121,7 @@ function DemoPlayer() {
               <path d="M8 5.8v10.4L17 11 8 5.8Z" />
             </svg>
           </span>
-          <span className="rounded-full bg-[#16081f] px-4 py-1.5 text-sm font-medium text-[#e8b44d]">
+          <span className="bg-[var(--ink)] px-4 py-1.5 text-sm font-medium text-[var(--sheet)]">
             Play the 1-minute demo
           </span>
         </button>
@@ -146,30 +130,18 @@ function DemoPlayer() {
   );
 }
 
-function SearchIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
-      <circle cx="7" cy="7" r="4.2" stroke="currentColor" strokeWidth="1.5" />
-      <path
-        d="M10.2 10.2 13.5 13.5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
 function FounderPhoto({
   founder,
-  size = 44,
+  size = 48,
+  className,
 }: {
   founder: (typeof DEMO_FOUNDERS)[number];
   size?: number;
+  className?: string;
 }) {
   return (
     <span
-      className="relative shrink-0 overflow-hidden rounded-full ring-2 ring-[#e8b44d]/70"
+      className={cn("relative shrink-0 overflow-hidden", className)}
       style={{ width: size, height: size }}
     >
       <Image
@@ -192,243 +164,283 @@ function formatMrr(cents: number) {
   });
 }
 
-export function SiteHeader() {
+function SiteHeader() {
+  const [open, setOpen] = useState(false);
+
   return (
-    <header className="relative z-20 flex items-center justify-between px-6 py-5 md:px-8">
-      <Link
-        href="/"
-        className="inline-flex items-center gap-2 font-serif text-[22px] tracking-tight text-[#e8b44d]"
-      >
-        <Image
-          src="/logo.png"
-          alt=""
-          width={28}
-          height={28}
-          className="rounded-md"
-        />
-        pulseboard
-      </Link>
-      <nav className="flex items-center gap-2 text-[#16081f] md:gap-3">
-        <a
-          href="#demo"
-          className="hidden items-center rounded-full px-3 py-2 text-sm font-medium text-[#16081f]/70 hover:bg-[#16081f]/8 hover:text-[#16081f] sm:inline-flex"
-        >
-          Demo
-        </a>
-        <a
-          href="#voices"
-          className="hidden items-center rounded-full px-3 py-2 text-sm font-medium text-[#16081f]/70 hover:bg-[#16081f]/8 hover:text-[#16081f] sm:inline-flex"
-        >
-          Founders
-        </a>
-        <a
-          href="#pricing"
-          className="hidden items-center rounded-full px-3 py-2 text-sm font-medium text-[#16081f]/70 hover:bg-[#16081f]/8 hover:text-[#16081f] md:inline-flex"
-        >
-          Price
-        </a>
+    <header className="absolute inset-x-0 top-0 z-30">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-5 md:px-8">
         <Link
-          href="/login?next=/app"
-          className="inline-flex items-center rounded-full px-3 py-2 text-sm font-medium text-[#16081f]/70 hover:bg-[#16081f]/8 hover:text-[#16081f]"
+          href="/"
+          className="inline-flex items-center gap-2.5 text-[var(--sheet)]"
         >
-          Sign in
+          <Image
+            src="/logo.png"
+            alt=""
+            width={28}
+            height={28}
+            className="rounded"
+          />
+          <span className="font-serif text-[1.35rem] tracking-tight">
+            Pulseboard
+          </span>
         </Link>
-        <Link
-          href="/signup?next=/billing"
-          className="inline-flex h-10 items-center gap-2 rounded-full bg-[#e8b44d] px-5 text-sm font-medium text-[#16081f] transition hover:bg-[#f0c15a]"
+
+        <nav className="hidden items-center gap-1 md:flex">
+          {[
+            { href: "#demo", label: "Demo" },
+            { href: "#voices", label: "Founders" },
+            { href: "#pricing", label: "Price" },
+          ].map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="px-3 py-2 text-sm text-[var(--sheet)]/75 transition hover:text-[var(--sheet)]"
+            >
+              {item.label}
+            </a>
+          ))}
+          <Link
+            href="/login?next=/app"
+            className="ml-2 px-3 py-2 text-sm text-[var(--sheet)]/75 transition hover:text-[var(--sheet)]"
+          >
+            Sign in
+          </Link>
+          <Link
+            href="/signup?next=/billing"
+            className="ml-1 bg-[var(--brass)] px-4 py-2.5 text-sm font-medium text-[var(--ink)] transition hover:brightness-105"
+          >
+            Start for $12
+          </Link>
+        </nav>
+
+        <button
+          type="button"
+          className="flex h-10 w-10 items-center justify-center text-[var(--sheet)] md:hidden"
+          aria-expanded={open}
+          aria-label={open ? "Close menu" : "Open menu"}
+          onClick={() => setOpen((v) => !v)}
         >
-          <HomeIcon />
-          Start for $12
-        </Link>
-      </nav>
+          <span className="sr-only">Menu</span>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
+            {open ? (
+              <path
+                d="M5 5l10 10M15 5 5 15"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+              />
+            ) : (
+              <path
+                d="M3 6h14M3 10h14M3 14h14"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+              />
+            )}
+          </svg>
+        </button>
+      </div>
+
+      {open ? (
+        <div className="border-t border-[var(--sheet)]/15 bg-[var(--ink)] px-5 py-4 md:hidden">
+          <div className="flex flex-col gap-1">
+            {[
+              { href: "#demo", label: "Demo" },
+              { href: "#voices", label: "Founders" },
+              { href: "#pricing", label: "Price" },
+              { href: "/login?next=/app", label: "Sign in" },
+            ].map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="py-3 text-base text-[var(--sheet)]/85"
+                onClick={() => setOpen(false)}
+              >
+                {item.label}
+              </a>
+            ))}
+            <Link
+              href="/signup?next=/billing"
+              className="mt-2 bg-[var(--brass)] px-4 py-3 text-center text-sm font-medium text-[var(--ink)]"
+              onClick={() => setOpen(false)}
+            >
+              Start for $12
+            </Link>
+          </div>
+        </div>
+      ) : null}
     </header>
   );
 }
 
 export function LandingPage({ founderCount = 0 }: { founderCount?: number }) {
   return (
-    <div className="landing relative min-h-svh">
+    <div className="landing relative min-h-svh overflow-x-hidden">
       <div className="landing-grain" aria-hidden />
 
-      <section className="relative overflow-hidden bg-[#16081f]">
-        <div className="absolute inset-0 grid md:grid-cols-2" aria-hidden>
-          <div className="relative bg-[#16081f]">
-            <div className="landing-orb absolute -left-20 top-24 h-72 w-72 bg-[#e8b44d]/18" />
-            <div className="landing-grid opacity-40" />
-          </div>
-          <div className="relative bg-[#d8d8e2]">
-            <div
-              className="landing-orb absolute -right-16 bottom-10 h-64 w-64 bg-[#16081f]/10"
-              style={{ animationDelay: "-6s" }}
-            />
-          </div>
+      {/* Hero — one composition: brand, headline, line, CTAs, full-bleed photo */}
+      <section className="relative min-h-[100svh] bg-[var(--ink)] text-[var(--sheet)]">
+        <div className="landing-hero-media absolute inset-0">
+          <Image
+            src="/hero-founder.png"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-[center_20%] opacity-55 md:object-[68%_18%] md:opacity-70"
+          />
+          <div
+            className="absolute inset-0 bg-gradient-to-r from-[var(--ink)] via-[var(--ink)]/88 to-[var(--ink)]/35 md:via-[var(--ink)]/75 md:to-transparent"
+            aria-hidden
+          />
+          <div
+            className="absolute inset-0 bg-gradient-to-t from-[var(--ink)] via-transparent to-[var(--ink)]/50 md:to-[var(--ink)]/30"
+            aria-hidden
+          />
         </div>
 
-        <div className="relative mx-auto max-w-6xl">
-          <SiteHeader />
+        <SiteHeader />
 
-          <div className="relative grid items-center md:grid-cols-2 md:min-h-[680px]">
-            <div className="flex flex-col justify-center px-6 pb-16 pt-8 md:pr-36 md:pb-20 md:pl-8">
-              <p
-                className="landing-rise text-sm tracking-wide text-[#e8b44d]"
-                style={{ animationDelay: "40ms" }}
-              >
-                Pulseboard
-              </p>
-              <h1 className="mt-3 font-sans text-[clamp(2.8rem,6vw,5rem)] leading-[0.86] font-black tracking-[-0.04em] text-white">
-                <span className="landing-rise block">THE</span>
-                <span
-                  className="landing-rise mt-1 block text-right"
-                  style={{ animationDelay: "90ms" }}
-                >
-                  WEEK
-                </span>
-              </h1>
-              <p
-                className="landing-rise mt-6 max-w-[17rem] text-sm leading-6 text-white/70"
-                style={{ animationDelay: "180ms" }}
-              >
-                One Monday page for MRR, paying users, runway, and the three
-                things that have to move.
-              </p>
-              <div
-                className="landing-rise mt-6 flex flex-wrap items-center gap-3"
-                style={{ animationDelay: "240ms" }}
-              >
-                <Link
-                  href="/signup?next=/billing"
-                  className="inline-flex h-10 w-fit items-center rounded-full bg-[#e8b44d] px-5 text-sm font-medium text-[#16081f] transition hover:bg-[#f0c15a]"
-                >
-                  Start for $12
-                </Link>
-                <a
-                  href="#demo"
-                  className="inline-flex h-10 w-fit items-center rounded-full bg-white px-5 text-sm font-medium text-[#16081f] transition hover:bg-white/90"
-                >
-                  Watch the demo
-                </a>
-              </div>
-              {founderCount > 0 ? (
-                <p
-                  className="landing-rise mt-5 text-sm text-white/45"
-                  style={{ animationDelay: "300ms" }}
-                >
-                  <span className="text-[#e8b44d]">{founderCount}</span>{" "}
-                  {founderCount === 1 ? "founder" : "founders"} already writing
-                  the week
-                </p>
-              ) : null}
-            </div>
-
-            <div className="relative flex flex-col justify-center px-6 pb-16 pt-40 text-[#16081f] md:pt-8 md:pr-8 md:pb-20 md:pl-36">
+        <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-end px-5 pb-14 pt-28 md:justify-center md:px-8 md:pb-24 md:pt-24">
+          <div className="max-w-xl">
+            <p
+              className="landing-rise font-serif text-4xl tracking-tight text-[var(--brass)] sm:text-5xl md:text-6xl"
+              style={{ animationDelay: "40ms" }}
+            >
+              Pulseboard
+            </p>
+            <span
+              className="landing-underline mt-3 block h-px w-16 bg-[var(--brass)]"
+              aria-hidden
+            />
+            <h1
+              className="landing-rise mt-6 font-sans text-[clamp(2.4rem,7vw,4.25rem)] leading-[0.95] font-black tracking-[-0.035em]"
+              style={{ animationDelay: "120ms" }}
+            >
+              Write the week.
+            </h1>
+            <p
+              className="landing-rise mt-3 font-hand text-2xl leading-snug text-[var(--brass)] md:text-3xl"
+              style={{ animationDelay: "160ms" }}
+            >
+              fifteen minutes. then close the tabs.
+            </p>
+            <p
+              className="landing-rise mt-5 max-w-sm text-[0.95rem] leading-7 text-[var(--sheet)]/72"
+              style={{ animationDelay: "200ms" }}
+            >
+              One Monday page for MRR, paying users, runway, and the three
+              things that have to move.
+            </p>
+            <div
+              className="landing-rise mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
+              style={{ animationDelay: "280ms" }}
+            >
               <Link
                 href="/signup?next=/billing"
-                className="landing-rise mb-8 ml-auto flex h-11 w-full max-w-[240px] items-center gap-3 rounded-full bg-white px-4 text-sm text-[#16081f]/55 shadow-sm transition hover:text-[#16081f]"
-                style={{ animationDelay: "160ms" }}
+                className="inline-flex h-12 items-center justify-center bg-[var(--brass)] px-6 text-sm font-medium text-[var(--ink)] transition hover:brightness-105"
               >
-                <SearchIcon />
-                Start this week
+                Start for $12
               </Link>
-              <p
-                className="landing-rise text-right font-sans text-[clamp(2.8rem,6vw,5rem)] leading-[0.86] font-black tracking-[-0.04em] text-[#16081f]"
-                style={{ animationDelay: "220ms" }}
+              <a
+                href="#demo"
+                className="inline-flex h-12 items-center justify-center border border-[var(--sheet)]/35 px-6 text-sm font-medium text-[var(--sheet)] transition hover:border-[var(--sheet)]/70"
               >
-                <span className="relative block">
-                  ONE
-                  <span className="absolute -top-5 -right-2 hidden text-2xl font-light text-[#e8b44d] md:inline">
-                    *
-                  </span>
-                </span>
-                <span className="mt-1 block">PAGE</span>
+                Watch the demo
+              </a>
+            </div>
+            {founderCount > 0 ? (
+              <p
+                className="landing-rise mt-6 font-hand text-xl text-[var(--sheet)]/65"
+                style={{ animationDelay: "360ms" }}
+              >
+                {founderCount}{" "}
+                {founderCount === 1 ? "founder" : "founders"} already writing
+                the week
               </p>
-            </div>
-
-            <div className="landing-circle pointer-events-none absolute top-[38%] left-1/2 z-20 h-[240px] w-[240px] overflow-hidden rounded-full bg-[#d8d8e2] ring-2 ring-[#e8b44d] md:top-1/2 md:h-[300px] md:w-[300px]">
-              <Image
-                src="/hero-founder.png"
-                alt="A founder walking to write the week’s numbers"
-                fill
-                priority
-                sizes="300px"
-                className="object-cover object-[center_12%]"
-              />
-            </div>
+            ) : null}
           </div>
         </div>
-
-        <div
-          className="absolute inset-x-0 bottom-0 z-10 h-1.5 bg-[#e8b44d]"
-          aria-hidden
-        />
       </section>
 
+      {/* Demo */}
       <section
         id="demo"
-        className="scroll-mt-24 bg-[#d8d8e2] px-6 py-16 text-[#16081f] md:py-20"
+        className="scroll-mt-20 bg-[var(--paper)] px-5 py-16 text-[var(--ink)] md:px-8 md:py-24"
       >
         <div className="mx-auto max-w-6xl">
           <Reveal>
-            <p className="text-sm text-[#16081f]/50">Watch it</p>
-            <h2 className="mt-3 max-w-xl font-sans text-4xl leading-[0.95] font-black tracking-tight md:text-5xl">
+            <p className="font-hand text-xl text-[var(--moss)]">product</p>
+            <h2 className="mt-3 max-w-xl font-sans text-3xl leading-[1.05] font-black tracking-tight sm:text-4xl md:text-5xl">
               The Monday page, in one minute.
             </h2>
-            <p className="mt-4 max-w-md text-sm leading-7 text-[#16081f]/65">
-              Landing, create an account, the scorecard, customers, the weekly
-              review, and the systems you already use.
+            <p className="mt-4 max-w-md text-sm leading-7 text-[var(--mute)]">
+              Account, scorecard, customers, weekly review — the loop founders
+              actually keep.
             </p>
           </Reveal>
-          <Reveal delay={100}>
+          <Reveal delay={90}>
             <DemoPlayer />
           </Reveal>
         </div>
       </section>
 
-      <section className="bg-[#16081f] px-6 py-16 text-white md:py-20">
-        <div className="mx-auto max-w-4xl text-center">
+      {/* Featured voice */}
+      <section className="border-y border-[var(--rule)] bg-[var(--sheet)] px-5 py-16 md:px-8 md:py-20">
+        <div className="mx-auto max-w-3xl">
           <Reveal>
-            <div className="mx-auto mb-8 flex justify-center">
-              <FounderPhoto founder={FEATURED} size={88} />
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-8">
+              <FounderPhoto
+                founder={FEATURED}
+                size={96}
+                className="border border-[var(--rule)]"
+              />
+              <div>
+                <p className="font-hand text-[1.65rem] leading-snug text-[var(--ink)] md:text-[2rem]">
+                  “{FEATURED.quote}”
+                </p>
+                <p className="mt-5 font-hand text-lg text-[var(--moss)]">
+                  — {FEATURED.name}, {FEATURED.startup}
+                </p>
+                <p className="mt-1 text-sm text-[var(--mute)]">
+                  {FEATURED.role} · {FEATURED.blurb}
+                </p>
+                <Link
+                  href="/signup?next=/billing"
+                  className="mt-5 inline-flex text-sm font-medium text-[var(--moss)] underline-offset-4 hover:underline"
+                >
+                  Try {FEATURED.name.split(" ")[0]}’s demo scorecard →
+                </Link>
+              </div>
             </div>
-            <p className="font-serif text-3xl leading-snug text-[#e8b44d] md:text-4xl">
-              “{FEATURED.quote}”
-            </p>
-            <p className="mt-6 text-sm text-white/55">
-              <span className="text-white">{FEATURED.name}</span>
-              {" · "}
-              {FEATURED.role}, {FEATURED.startup}
-              {" · "}
-              {FEATURED.blurb}
-            </p>
-            <Link
-              href={`/signup?next=/billing`}
-              className="mt-8 inline-flex text-sm font-medium text-[#e8b44d] underline-offset-4 hover:underline"
-            >
-              Try {FEATURED.name.split(" ")[0]}’s demo scorecard →
-            </Link>
           </Reveal>
         </div>
       </section>
 
+      {/* Ritual */}
       <section
         id="ritual"
-        className="scroll-mt-8 bg-[#d8d8e2] px-6 py-20 text-[#16081f] md:py-24"
+        className="scroll-mt-20 bg-[var(--paper)] px-5 py-16 md:px-8 md:py-24"
       >
         <div className="mx-auto max-w-6xl">
           <Reveal>
-            <p className="text-sm text-[#16081f]/50">The ritual</p>
-            <h2 className="mt-3 max-w-xl font-sans text-4xl leading-[0.95] font-black tracking-tight md:text-5xl">
+            <p className="font-hand text-xl text-[var(--moss)]">the ritual</p>
+            <h2 className="mt-3 max-w-lg font-sans text-3xl leading-[1.05] font-black tracking-tight sm:text-4xl md:text-5xl">
               Same page every Monday.
             </h2>
           </Reveal>
-          <ol className="mt-12 grid gap-10 md:grid-cols-3">
+          <ol className="mt-12 grid gap-10 sm:grid-cols-3 sm:gap-8">
             {RITUAL.map((item, i) => (
-              <Reveal key={item.n} delay={i * 80}>
-                <li>
-                  <p className="font-mono text-sm text-[#e8b44d]">{item.n}</p>
-                  <h3 className="mt-3 text-2xl font-black tracking-tight">
+              <Reveal key={item.n} delay={i * 70}>
+                <li className="border-t border-[var(--ink)] pt-5">
+                  <p className="font-mono text-xs tracking-wider text-[var(--moss)]">
+                    {item.n}
+                  </p>
+                  <h3 className="mt-3 text-xl font-black tracking-tight md:text-2xl">
                     {item.title}
                   </h3>
-                  <p className="mt-3 text-sm leading-7 text-[#16081f]/65">
+                  <p className="mt-3 text-sm leading-7 text-[var(--mute)]">
                     {item.body}
                   </p>
                 </li>
@@ -438,37 +450,45 @@ export function LandingPage({ founderCount = 0 }: { founderCount?: number }) {
         </div>
       </section>
 
+      {/* Testimonials */}
       <section
         id="voices"
-        className="scroll-mt-8 bg-[#16081f] px-6 py-20 text-white md:py-24"
+        className="scroll-mt-20 bg-[var(--ink)] px-5 py-16 text-[var(--sheet)] md:px-8 md:py-24"
       >
         <div className="mx-auto max-w-6xl">
           <Reveal>
-            <p className="text-sm text-[#e8b44d]">From the demo founders</p>
-            <h2 className="mt-3 max-w-2xl font-sans text-4xl leading-[0.95] font-black tracking-tight md:text-5xl">
-              Real scorecards. Real Monday rituals.
+            <p className="font-hand text-xl text-[var(--brass)]">
+              from the demo founders
+            </p>
+            <h2 className="mt-3 max-w-2xl font-sans text-3xl leading-[1.05] font-black tracking-tight sm:text-4xl md:text-5xl">
+              Lived-in scorecards. Honest weeks.
             </h2>
-            <p className="mt-4 max-w-lg text-sm leading-7 text-white/60">
-              Open any demo account on signup and feel a lived-in week — MRR,
-              customers, and three priorities already filled in.
+            <p className="mt-4 max-w-lg text-sm leading-7 text-[var(--sheet)]/60">
+              Open any demo on signup — MRR, customers, and three priorities
+              already filled in.
             </p>
           </Reveal>
 
-          <div className="mt-14 grid gap-x-10 gap-y-12 md:grid-cols-2">
-            {TESTIMONIALS.map((founder, i) => (
-              <Reveal key={founder.key} delay={i * 70}>
-                <figure className="border-t border-white/10 pt-6">
-                  <blockquote className="text-lg leading-8 text-white/85 md:text-xl">
+          <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:gap-x-12 lg:gap-y-14">
+            {DEMO_FOUNDERS.map((founder, i) => (
+              <Reveal key={founder.key} delay={i * 60}>
+                <figure className="border-t border-[var(--sheet)]/15 pt-6">
+                  <blockquote className="font-hand text-[1.35rem] leading-8 text-[var(--sheet)]/90 md:text-[1.5rem]">
                     “{founder.quote}”
                   </blockquote>
                   <figcaption className="mt-6 flex items-center gap-3">
-                    <FounderPhoto founder={founder} size={48} />
+                    <FounderPhoto
+                      founder={founder}
+                      size={52}
+                      className="border border-[var(--sheet)]/20"
+                    />
                     <div className="min-w-0">
-                      <p className="font-medium text-white">{founder.name}</p>
-                      <p className="text-sm text-white/50">
+                      <p className="font-medium text-[var(--sheet)]">
+                        {founder.name}
+                      </p>
+                      <p className="truncate text-sm text-[var(--sheet)]/50">
                         {founder.role}, {founder.startup} ·{" "}
-                        {formatMrr(founder.mrrCents)} MRR ·{" "}
-                        {founder.payingUsers} paying
+                        {formatMrr(founder.mrrCents)} MRR
                       </p>
                     </div>
                   </figcaption>
@@ -477,10 +497,10 @@ export function LandingPage({ founderCount = 0 }: { founderCount?: number }) {
             ))}
           </div>
 
-          <Reveal delay={120} className="mt-14 text-center">
+          <Reveal delay={100} className="mt-14">
             <Link
               href="/signup?next=/billing"
-              className="inline-flex h-12 items-center rounded-full bg-[#e8b44d] px-6 text-sm font-medium text-[#16081f] transition hover:bg-[#f0c15a]"
+              className="inline-flex h-12 w-full items-center justify-center bg-[var(--brass)] px-6 text-sm font-medium text-[var(--ink)] transition hover:brightness-105 sm:w-auto"
             >
               Create an account or try a demo
             </Link>
@@ -488,62 +508,76 @@ export function LandingPage({ founderCount = 0 }: { founderCount?: number }) {
         </div>
       </section>
 
-      <section id="pricing" className="scroll-mt-8 bg-[#d8d8e2]">
-        <div className="mx-auto grid max-w-6xl md:grid-cols-2">
-          <Reveal className="px-6 py-16 md:px-8 md:py-20">
-            <p className="text-sm text-[#16081f]/50">Price</p>
-            <h2 className="mt-3 font-sans text-4xl leading-[0.95] font-black tracking-tight text-[#16081f] md:text-5xl">
+      {/* Pricing */}
+      <section
+        id="pricing"
+        className="scroll-mt-20 bg-[var(--paper)] px-5 py-16 md:px-8 md:py-24"
+      >
+        <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:gap-16 lg:items-end">
+          <Reveal>
+            <p className="font-hand text-xl text-[var(--moss)]">price</p>
+            <h2 className="mt-3 font-sans text-3xl leading-[1.05] font-black tracking-tight sm:text-4xl md:text-5xl">
               Cheap enough to buy on a whim.
             </h2>
-            <p className="mt-4 max-w-sm text-sm leading-7 text-[#16081f]/65">
+            <p className="mt-4 max-w-sm text-sm leading-7 text-[var(--mute)]">
               $12 a month, or $99 for the founding year. Real enough that we
               count you as a paying user.
             </p>
           </Reveal>
-          <div className="grid gap-px bg-[#16081f]/10 md:grid-cols-2">
-            <Reveal className="bg-[#d8d8e2] px-6 py-16 md:px-8">
-              <p className="text-sm text-[#16081f]/50">Founder</p>
-              <p className="mt-3 font-black text-5xl tracking-tight text-[#16081f]">
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Reveal className="border border-[var(--rule)] bg-[var(--sheet)] p-6 md:p-8">
+              <p className="text-sm text-[var(--mute)]">Founder</p>
+              <p className="mt-3 font-black text-5xl tracking-tight text-[var(--ink)]">
                 $12
               </p>
-              <p className="mt-1 text-sm text-[#16081f]/55">per month</p>
-              <Link href="/signup?next=/billing" className="mt-8 block">
-                <Button className="w-full bg-[#16081f] text-white hover:bg-[#2a1436]">
-                  Get the Founder plan
-                </Button>
+              <p className="mt-1 text-sm text-[var(--mute)]">per month</p>
+              <Link
+                href="/signup?next=/billing"
+                className="mt-8 inline-flex h-11 w-full items-center justify-center bg-[var(--ink)] text-sm font-medium text-[var(--sheet)] transition hover:bg-[var(--moss-deep)]"
+              >
+                Get the Founder plan
               </Link>
             </Reveal>
             <Reveal
               delay={80}
-              className="bg-[#16081f] px-6 py-16 text-white md:px-8"
+              className="border border-[var(--ink)] bg-[var(--ink)] p-6 text-[var(--sheet)] md:p-8"
             >
-              <p className="text-sm text-white/50">Founding year</p>
+              <p className="text-sm text-[var(--sheet)]/55">Founding year</p>
               <p className="mt-3 font-black text-5xl tracking-tight">$99</p>
-              <p className="mt-1 text-sm text-white/55">per year · save $45</p>
-              <Link href="/signup?next=/billing" className="mt-8 block">
-                <Button className="w-full">Get the founding year</Button>
+              <p className="mt-1 text-sm text-[var(--sheet)]/55">
+                per year · save $45
+              </p>
+              <Link
+                href="/signup?next=/billing"
+                className="mt-8 inline-flex h-11 w-full items-center justify-center bg-[var(--brass)] text-sm font-medium text-[var(--ink)] transition hover:brightness-105"
+              >
+                Get the founding year
               </Link>
             </Reveal>
           </div>
         </div>
       </section>
 
-      <footer className="bg-[#16081f] px-6 py-12 text-center">
-        <p className="font-serif text-2xl text-[#e8b44d]">pulseboard</p>
-        <SocialLinks className="mt-5 mb-4" />
-        <p className="text-sm text-white/45">
+      <footer className="border-t border-[var(--rule)] bg-[var(--sheet)] px-5 py-12 text-center md:px-8">
+        <p className="font-serif text-2xl text-[var(--ink)]">Pulseboard</p>
+        <SocialLinks className="mt-5 mb-4" tone="ink" />
+        <p className="font-hand text-xl text-[var(--moss)]">
           Nairobi · write the numbers down
         </p>
-        <p className="mt-4 text-sm text-white/40">
-          <Link href="/login?next=/app" className="hover:text-white">
+        <p className="mt-4 text-sm text-[var(--mute)]">
+          <Link href="/login?next=/app" className="hover:text-[var(--ink)]">
             Sign in
           </Link>
-          {" · "}
-          <Link href="/signup?next=/billing" className="hover:text-white">
+          <span className="mx-2 text-[var(--rule)]">·</span>
+          <Link
+            href="/signup?next=/billing"
+            className="hover:text-[var(--ink)]"
+          >
             Create an account
           </Link>
-          {" · "}
-          <a href="#voices" className="hover:text-white">
+          <span className="mx-2 text-[var(--rule)]">·</span>
+          <a href="#voices" className="hover:text-[var(--ink)]">
             Founder voices
           </a>
         </p>
