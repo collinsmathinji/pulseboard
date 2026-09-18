@@ -37,22 +37,36 @@ if (allowEmailLogin) {
       name: "Email",
       credentials: {
         email: { label: "Email", type: "email" },
+        intent: { label: "Intent", type: "text" },
+        name: { label: "Name", type: "text" },
       },
       async authorize(credentials) {
         const email = String(credentials?.email ?? "")
           .trim()
           .toLowerCase();
+        const intent = String(credentials?.intent ?? "signin");
+        const name = String(credentials?.name ?? "").trim();
         if (!email.includes("@")) return null;
 
-        const user = await prisma.user.upsert({
-          where: { email },
-          update: {},
-          create: {
-            email,
-            name: email.split("@")[0],
-          },
-        });
+        if (intent === "signup") {
+          const existing = await prisma.user.findUnique({ where: { email } });
+          if (existing) return null;
+          const user = await prisma.user.create({
+            data: {
+              email,
+              name: name || email.split("@")[0],
+            },
+          });
+          return {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            image: user.image,
+          };
+        }
 
+        const user = await prisma.user.findUnique({ where: { email } });
+        if (!user) return null;
         return {
           id: user.id,
           email: user.email,

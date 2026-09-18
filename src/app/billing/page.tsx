@@ -16,16 +16,18 @@ export default async function BillingPage() {
     <PortalCanvas className="flex items-center justify-center px-6 py-12">
       <div className="w-full max-w-3xl">
         <BrandMark />
-        <PageKicker>{paid ? "Founder plan" : "Pay to use"}</PageKicker>
+        <PageKicker>
+          {paid ? "Founder plan" : "Step 2 of 3 · Plan"}
+        </PageKicker>
         <PageTitle className="mt-3">
-          {paid ? "You're in." : "Cheap enough to buy on a whim."}
+          {paid ? "You're in." : "Pick a plan to open the page."}
         </PageTitle>
         <p className="mt-3 max-w-xl text-sm leading-6 text-white/55">
           {paid
             ? "Your Founder plan is active. Open the Monday page or manage billing."
             : stripeConfigured()
-              ? "Real checkout. $12/month or $99 for the founding year."
-              : "Stripe keys are not set, so local checkout unlocks the app without charging a card."}
+              ? "Account is ready. $12/month or $99 for the founding year unlocks the scorecard."
+              : "Account is ready. Stripe keys are not set, so local checkout unlocks the app without charging a card."}
         </p>
 
         {paid ? (

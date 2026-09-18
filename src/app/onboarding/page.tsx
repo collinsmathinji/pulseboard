@@ -12,10 +12,11 @@ export default async function OnboardingPage() {
 
   return (
     <StandaloneCard className="max-w-xl">
-      <PageKicker>Setup</PageKicker>
+      <PageKicker>Step 3 of 3 · Setup</PageKicker>
       <PageTitle className="mt-3">Name the company.</PageTitle>
       <p className="mt-3 text-sm leading-6 text-white/55">
-        Log the numbers you already know. You can change them every Monday.
+        Plan is active. Log the numbers you already know. You can change them
+        every Monday.
       </p>
       <form action={completeOnboarding} className="mt-8 space-y-4">
         <div>

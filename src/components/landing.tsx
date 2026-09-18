@@ -201,7 +201,13 @@ export function SiteHeader() {
           <MenuIcon />
         </a>
         <Link
-          href="/login?next=/billing"
+          href="/login?next=/app"
+          className="inline-flex items-center rounded-full px-3 text-sm font-medium text-[#16081f]/70 hover:bg-[#16081f]/8 hover:text-[#16081f]"
+        >
+          Sign in
+        </Link>
+        <Link
+          href="/signup?next=/billing"
           className="inline-flex h-10 items-center gap-2 rounded-full bg-[#e8b44d] px-5 text-sm font-medium text-[#16081f]"
         >
           <HomeIcon />
@@ -212,7 +218,7 @@ export function SiteHeader() {
   );
 }
 
-export function LandingPage() {
+export function LandingPage({ founderCount = 0 }: { founderCount?: number }) {
   return (
     <div className="landing min-h-svh">
       <section className="relative overflow-hidden bg-[#16081f]">
@@ -246,12 +252,12 @@ export function LandingPage() {
                 className="landing-rise mt-6 flex flex-wrap items-center gap-3"
                 style={{ animationDelay: "240ms" }}
               >
-                <a
-                  href="#ritual"
+                <Link
+                  href="/signup?next=/billing"
                   className="inline-flex h-10 w-fit items-center rounded-full bg-[#e8b44d] px-5 text-sm font-medium text-[#16081f]"
                 >
-                  Learn more
-                </a>
+                  Start for $12
+                </Link>
                 <a
                   href="#demo"
                   className="inline-flex h-10 w-fit items-center rounded-full bg-white px-5 text-sm font-medium text-[#16081f]"
@@ -259,11 +265,21 @@ export function LandingPage() {
                   Watch the demo
                 </a>
               </div>
+              {founderCount > 0 ? (
+                <p
+                  className="landing-rise mt-5 text-sm text-white/45"
+                  style={{ animationDelay: "300ms" }}
+                >
+                  <span className="text-[#e8b44d]">{founderCount}</span>{" "}
+                  {founderCount === 1 ? "founder" : "founders"} already writing
+                  the week
+                </p>
+              ) : null}
             </div>
 
             <div className="relative flex flex-col justify-center px-6 pb-16 pt-40 text-[#16081f] md:pt-8 md:pr-8 md:pb-20 md:pl-36">
               <Link
-                href="/login?next=/billing"
+                href="/signup?next=/billing"
                 className="landing-rise mb-8 ml-auto flex h-11 w-full max-w-[240px] items-center gap-3 rounded-full bg-white px-4 text-sm text-[#16081f]/55"
                 style={{ animationDelay: "160ms" }}
               >
@@ -313,8 +329,8 @@ export function LandingPage() {
             The Monday page, in one minute.
           </h2>
           <p className="mt-4 max-w-md text-sm leading-7 text-[#16081f]/65">
-            Landing, sign-in, the scorecard, customers, the weekly review, and
-            the systems you already use.
+              Landing, create an account, the scorecard, customers, the weekly
+              review, and the systems you already use.
           </p>
           <DemoPlayer />
         </div>
@@ -368,7 +384,7 @@ export function LandingPage() {
                 $12
               </p>
               <p className="mt-1 text-sm text-[#16081f]/55">per month</p>
-              <Link href="/login?next=/billing" className="mt-8 block">
+              <Link href="/signup?next=/billing" className="mt-8 block">
                 <Button className="w-full bg-[#16081f] text-white hover:bg-[#2a1436]">
                   Get the Founder plan
                 </Button>
@@ -378,7 +394,7 @@ export function LandingPage() {
               <p className="text-sm text-white/50">Founding year</p>
               <p className="mt-3 font-black text-5xl tracking-tight">$99</p>
               <p className="mt-1 text-sm text-white/55">per year · save $45</p>
-              <Link href="/login?next=/billing" className="mt-8 block">
+              <Link href="/signup?next=/billing" className="mt-8 block">
                 <Button className="w-full">Get the founding year</Button>
               </Link>
             </Reveal>
@@ -390,6 +406,15 @@ export function LandingPage() {
         <SocialLinks className="mb-4" />
         <p className="text-sm text-[#e8b44d]/90">
           Pulseboard · Nairobi · write the numbers down
+        </p>
+        <p className="mt-3 text-sm text-white/40">
+          <Link href="/login?next=/app" className="hover:text-white">
+            Sign in
+          </Link>
+          {" · "}
+          <Link href="/signup?next=/billing" className="hover:text-white">
+            Create an account
+          </Link>
         </p>
       </footer>
     </div>

@@ -13,7 +13,7 @@ import {
 export async function POST(request: Request) {
   const session = await auth();
   if (!session?.user?.id) {
-    return NextResponse.redirect(new URL("/login", appUrl()));
+    return NextResponse.redirect(new URL("/signup?next=/billing", appUrl()));
   }
 
   const contentType = request.headers.get("content-type") ?? "";
