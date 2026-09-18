@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import { auth, authFlags } from "@/auth";
 import { continueWithGoogle, createAccount, startAsDemo } from "@/actions/auth";
@@ -180,12 +181,21 @@ export default async function SignupPage({
                         type="submit"
                         className="flex w-full items-center justify-between gap-3 rounded-2xl border border-[#16081f]/10 bg-white px-4 py-3 text-left transition hover:border-[#16081f]/25 hover:bg-white/80"
                       >
-                        <span>
-                          <span className="block text-sm font-semibold">
-                            {demo.name}
-                          </span>
-                          <span className="mt-0.5 block text-xs text-[#16081f]/50">
-                            {demo.startup} · {demo.blurb}
+                        <span className="flex min-w-0 items-center gap-3">
+                          <Image
+                            src={demo.image}
+                            alt=""
+                            width={40}
+                            height={40}
+                            className="h-10 w-10 rounded-full object-cover ring-2 ring-[#e8b44d]/50"
+                          />
+                          <span className="min-w-0">
+                            <span className="block text-sm font-semibold">
+                              {demo.name}
+                            </span>
+                            <span className="mt-0.5 block text-xs text-[#16081f]/50">
+                              {demo.startup} · {demo.blurb}
+                            </span>
                           </span>
                         </span>
                         <span className="shrink-0 text-xs font-medium text-[#16081f]/45">
