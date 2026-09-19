@@ -7,7 +7,7 @@ export function Sparkline({
 }) {
   if (points.length < 2) {
     return (
-      <p className="text-sm text-white/45">
+      <p className="text-sm text-[var(--mute)]">
         Log a weekly review to see the trend.
       </p>
     );
@@ -30,7 +30,7 @@ export function Sparkline({
   return (
     <svg
       viewBox={`0 0 ${w} ${h}`}
-      className={className ?? "h-24 w-full text-[#e8b44d]"}
+      className={className ?? "h-24 w-full text-[var(--moss)]"}
       aria-hidden
     >
       <path d={area} fill="currentColor" className="opacity-15" />
@@ -38,9 +38,9 @@ export function Sparkline({
         d={path}
         fill="none"
         stroke="currentColor"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        strokeWidth="2"
+        strokeLinecap="square"
+        strokeLinejoin="miter"
       />
     </svg>
   );
@@ -56,12 +56,14 @@ export function KpiCard({
   hint?: string;
 }) {
   return (
-    <div className="rounded-[24px] bg-white/5 p-5">
-      <p className="text-sm text-white/45">{label}</p>
-      <p className="mt-2 font-sans text-3xl font-black tracking-tight text-white">
+    <div className="border-t border-[var(--ink)] bg-[var(--sheet)] p-5">
+      <p className="font-hand text-lg text-[var(--moss)]">{label}</p>
+      <p className="mt-2 font-sans text-3xl font-black tracking-tight text-[var(--ink)]">
         {value}
       </p>
-      {hint ? <p className="mt-2 text-sm text-[#e8b44d]">{hint}</p> : null}
+      {hint ? (
+        <p className="mt-2 text-sm text-[var(--mute)]">{hint}</p>
+      ) : null}
     </div>
   );
 }

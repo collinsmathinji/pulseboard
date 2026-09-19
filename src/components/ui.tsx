@@ -21,16 +21,17 @@ export function Button({
   return (
     <button
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-full font-medium transition disabled:opacity-50 disabled:pointer-events-none",
+        "inline-flex items-center justify-center gap-2 font-medium transition disabled:pointer-events-none disabled:opacity-50",
         variant === "primary" &&
-          "bg-[#e8b44d] text-[#16081f] hover:bg-[#f0c15a]",
+          "bg-[var(--brass)] text-[var(--ink)] hover:brightness-105",
         variant === "secondary" &&
-          "bg-white/10 text-white hover:bg-white/16",
-        variant === "ghost" && "text-white/70 hover:bg-white/8",
+          "bg-[var(--ink)] text-[var(--sheet)] hover:bg-[var(--moss-deep)]",
+        variant === "ghost" &&
+          "text-[var(--mute)] hover:bg-[var(--sheet)] hover:text-[var(--ink)]",
         variant === "outline" &&
-          "border border-white/15 text-white hover:bg-white/8",
+          "border border-[var(--rule)] text-[var(--ink)] hover:border-[var(--ink)]/40 hover:bg-[var(--sheet)]",
         variant === "danger" &&
-          "bg-red-500/15 text-red-300 hover:bg-red-500/25",
+          "border border-[var(--rust)]/25 text-[var(--rust)] hover:bg-[var(--rust)]/8",
         size === "sm" && "h-8 px-3 text-sm",
         size === "md" && "h-10 px-4 text-sm",
         size === "lg" && "h-12 px-6 text-base",
@@ -48,7 +49,7 @@ export function Input({
   return (
     <input
       className={cn(
-        "h-11 w-full rounded-full border border-white/10 bg-[#110814] px-4 text-sm text-white outline-none transition placeholder:text-white/35 focus:border-[#e8b44d]/60 focus:ring-2 focus:ring-[#e8b44d]/20",
+        "h-11 w-full border border-[var(--rule)] bg-[var(--sheet)] px-4 text-sm text-[var(--ink)] outline-none transition placeholder:text-[var(--mute)]/50 focus:border-[var(--moss)] focus:ring-2 focus:ring-[var(--moss)]/20",
         className,
       )}
       {...props}
@@ -63,7 +64,7 @@ export function Textarea({
   return (
     <textarea
       className={cn(
-        "min-h-24 w-full rounded-2xl border border-white/10 bg-[#110814] px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/35 focus:border-[#e8b44d]/60 focus:ring-2 focus:ring-[#e8b44d]/20",
+        "min-h-24 w-full border border-[var(--rule)] bg-[var(--sheet)] px-4 py-3 text-sm text-[var(--ink)] outline-none transition placeholder:text-[var(--mute)]/50 focus:border-[var(--moss)] focus:ring-2 focus:ring-[var(--moss)]/20",
         className,
       )}
       {...props}
@@ -77,7 +78,7 @@ export function Label({
 }: LabelHTMLAttributes<HTMLLabelElement>) {
   return (
     <label
-      className={cn("mb-1.5 block text-sm text-white/55", className)}
+      className={cn("mb-1.5 block text-sm text-[var(--mute)]", className)}
       {...props}
     />
   );
@@ -90,7 +91,7 @@ export function Card({
   return (
     <div
       className={cn(
-        "rounded-[28px] bg-white/5 p-5",
+        "border border-[var(--rule)] bg-[var(--sheet)] p-5 md:p-6",
         className,
       )}
       {...props}

@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
-import { Button } from "@/components/ui";
 
 const links = [
   { href: "/app", label: "Overview" },
@@ -24,19 +23,21 @@ export function AppNav({
   const pathname = usePathname();
 
   return (
-    <aside className="flex w-full flex-col border-b border-white/8 bg-[#16081f] lg:sticky lg:top-0 lg:h-svh lg:w-64 lg:border-r lg:border-b-0">
+    <aside className="flex w-full flex-col border-b border-[var(--sheet)]/12 bg-[var(--ink)] text-[var(--sheet)] lg:sticky lg:top-0 lg:h-svh lg:w-64 lg:border-r lg:border-b-0 lg:border-[var(--sheet)]/12">
       <div className="flex items-center justify-between px-5 py-5 lg:block">
-        <Link href="/app" className="inline-flex items-center gap-2">
+        <Link href="/app" className="inline-flex items-center gap-2.5">
           <Image
             src="/logo.png"
-            alt="Pulseboard"
+            alt=""
             width={28}
             height={28}
-            className="rounded-md"
+            className="rounded"
           />
-          <span className="font-serif text-xl text-[#e8b44d]">pulseboard</span>
+          <span className="font-serif text-[1.35rem] tracking-tight text-[var(--brass)]">
+            Pulseboard
+          </span>
         </Link>
-        <p className="hidden truncate text-sm text-white/45 lg:mt-2 lg:block">
+        <p className="hidden truncate text-sm text-[var(--sheet)]/50 lg:mt-2 lg:block">
           {workspaceName}
         </p>
       </div>
@@ -50,10 +51,10 @@ export function AppNav({
             <Link
               key={link.href}
               href={link.href}
-              className={`rounded-full px-3 py-2 text-sm whitespace-nowrap ${
+              className={`px-3 py-2 text-sm whitespace-nowrap transition ${
                 active
-                  ? "bg-[#e8b44d] text-[#16081f]"
-                  : "text-white/60 hover:bg-white/8 hover:text-white"
+                  ? "bg-[var(--brass)] text-[var(--ink)]"
+                  : "text-[var(--sheet)]/60 hover:bg-[var(--sheet)]/8 hover:text-[var(--sheet)]"
               }`}
             >
               {link.label}
@@ -61,16 +62,15 @@ export function AppNav({
           );
         })}
       </nav>
-      <div className="flex items-center justify-between gap-3 border-t border-white/8 px-4 py-4">
-        <p className="truncate text-xs text-white/40">{email}</p>
-        <Button
-          variant="ghost"
-          size="sm"
+      <div className="flex items-center justify-between gap-3 border-t border-[var(--sheet)]/12 px-4 py-4">
+        <p className="truncate text-xs text-[var(--sheet)]/40">{email}</p>
+        <button
           type="button"
+          className="text-sm text-[var(--sheet)]/55 transition hover:text-[var(--sheet)]"
           onClick={() => signOut({ callbackUrl: "/" })}
         >
           Sign out
-        </Button>
+        </button>
       </div>
     </aside>
   );

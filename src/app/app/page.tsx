@@ -82,14 +82,14 @@ export default async function DashboardPage() {
   ];
 
   return (
-    <div className="mx-auto max-w-6xl pb-6">
+    <div className="app-rise mx-auto max-w-6xl pb-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <PageKicker>
             Overview · week {isoWeek()} · {formatWeekStamp()}
           </PageKicker>
           <PageTitle>{workspace.name}</PageTitle>
-          <p className="mt-3 max-w-xl text-sm leading-6 text-white/55">
+          <p className="mt-3 max-w-xl text-sm leading-7 text-[var(--mute)]">
             Four numbers. Three priorities. One Monday page.{" "}
             {workspace.reviews.length === 1
               ? "1 week logged."
@@ -104,65 +104,16 @@ export default async function DashboardPage() {
       </div>
 
       <Card className="mt-8">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <p className="text-sm text-white/45">Connected systems</p>
-            <p className="mt-1 text-sm text-white/70">
-              {systems.connected === 0
-                ? "Analytics, Stripe, and social are empty slots."
-                : `${systems.connected} of 3 slots live.`}
-            </p>
-          </div>
-          <Link href="/app/integrations">
-            <Button variant="outline">Open integrations</Button>
-          </Link>
-        </div>
-        <div className="mt-4 grid gap-2 sm:grid-cols-3">
-          {(
-            [
-              [
-                "Analytics",
-                systems.analytics,
-                workspace.gaMeasurementId ||
-                  workspace.gtmContainerId ||
-                  "Not connected",
-              ],
-              [
-                "Stripe",
-                systems.stripe,
-                workspace.planStatus === "active" ? "Plan active" : "Unpaid",
-              ],
-              [
-                "Social",
-                systems.social,
-                social.length ? social.map((link) => link.label).join(" · ") : "No profiles",
-              ],
-            ] as const
-          ).map(([label, on, detail]) => (
-            <div key={label} className="rounded-2xl bg-white/4 px-4 py-3">
-              <p className="text-sm text-[#e8b44d]">{on ? "Live" : "Slot"}</p>
-              <p className="mt-1 font-medium">{label}</p>
-              <p className="mt-1 text-sm text-white/45">{detail}</p>
-            </div>
-          ))}
-        </div>
-        {social.length > 0 ? (
-          <div className="mt-4">
-            <ShareRow
-              text={`${workspace.name} writes the week on one Pulseboard page.`}
-            />
-          </div>
-        ) : null}
-      </Card>
-
-      <Card className="mt-4">
         <PathToFive count={workspace.payingUsers} />
-        <p className="mt-3 text-sm text-white/55">
+        <p className="mt-3 text-sm text-[var(--mute)]">
           {remaining > 0 ? (
             <>
               {remaining} more paying user{remaining === 1 ? "" : "s"} to the
               Vaya milestone. Log them in{" "}
-              <Link href="/app/customers" className="text-[#e8b44d] underline">
+              <Link
+                href="/app/customers"
+                className="text-[var(--moss)] underline-offset-4 hover:underline"
+              >
                 Customers
               </Link>
               .
@@ -204,39 +155,41 @@ export default async function DashboardPage() {
         <KpiCard
           label="This week"
           value={workspace.weeklyGoal || "Set a goal"}
-          hint={
-            reviewedThisWeek ? "Monday ritual done" : "Ritual still open"
-          }
+          hint={reviewedThisWeek ? "Monday ritual done" : "Ritual still open"}
         />
       </div>
 
       <div className="mt-4 grid gap-3 lg:grid-cols-3">
         <Card>
-          <p className="text-sm text-white/45">Average from paying users</p>
+          <p className="font-hand text-lg text-[var(--moss)]">
+            Average from paying users
+          </p>
           <p className="mt-2 font-black text-3xl tracking-tight">
             {workspace.payingUsers > 0 ? formatMoney(arpu) : "—"}
           </p>
-          <p className="mt-2 text-sm text-white/45">
+          <p className="mt-2 text-sm text-[var(--mute)]">
             ARPU · {workspace.payingUsers} paying
           </p>
         </Card>
         <Card>
-          <p className="text-sm text-white/45">Logged in the customer book</p>
+          <p className="font-hand text-lg text-[var(--moss)]">
+            Logged in the customer book
+          </p>
           <p className="mt-2 font-black text-3xl tracking-tight">
             {formatMoney(loggedRevenue)}
           </p>
-          <p className="mt-2 text-sm text-white/45">
+          <p className="mt-2 text-sm text-[var(--mute)]">
             {workspace.customers.length === 1
               ? "1 payment recorded"
               : `${workspace.customers.length} payments recorded`}
           </p>
         </Card>
         <Card>
-          <p className="text-sm text-white/45">Weeks on the board</p>
+          <p className="font-hand text-lg text-[var(--moss)]">Weeks on the board</p>
           <p className="mt-2 font-black text-3xl tracking-tight">
             {workspace.reviews.length}
           </p>
-          <p className="mt-2 text-sm text-white/45">
+          <p className="mt-2 text-sm text-[var(--mute)]">
             {workspace.snapshots.length === 1
               ? "1 metric snapshot"
               : `${workspace.snapshots.length} metric snapshots`}
@@ -247,9 +200,9 @@ export default async function DashboardPage() {
       <div className="mt-4 grid gap-3 lg:grid-cols-2">
         <Card>
           <div className="flex items-center justify-between gap-3">
-            <p className="text-sm text-white/45">MRR trend</p>
+            <p className="font-hand text-lg text-[var(--moss)]">MRR trend</p>
             {mrrDelta !== null ? (
-              <span className="font-mono text-sm text-[#e8b44d]">
+              <span className="font-mono text-sm text-[var(--brass)]">
                 {formatDelta(mrrDelta)}
               </span>
             ) : null}
@@ -258,7 +211,7 @@ export default async function DashboardPage() {
             <Sparkline points={mrrPoints} />
           </div>
           {workspace.snapshots.length > 0 ? (
-            <p className="mt-3 text-sm text-white/40">
+            <p className="mt-3 text-sm text-[var(--mute)]">
               {workspace.snapshots.length === 1
                 ? "1 week of numbers."
                 : `${workspace.snapshots.length} weeks of numbers.`}
@@ -275,19 +228,22 @@ export default async function DashboardPage() {
         </Card>
 
         <Card>
-          <p className="text-sm text-white/45">Monday ritual</p>
-          <ol className="mt-4 space-y-4">
+          <p className="font-hand text-lg text-[var(--moss)]">Monday ritual</p>
+          <ol className="mt-4 space-y-5">
             {ritual.map((item) => (
-              <li key={item.n} className="flex gap-3">
-                <span className="font-mono text-sm text-[#e8b44d]">
+              <li
+                key={item.n}
+                className="grid grid-cols-[auto_1fr] gap-3 border-t border-[var(--rule)] pt-4 first:border-0 first:pt-0"
+              >
+                <span className="font-mono text-sm text-[var(--brass)]">
                   {item.n}
                 </span>
                 <div>
-                  <p className="text-sm text-white">
+                  <p className="font-medium text-[var(--ink)]">
                     {item.title}
                     {item.done ? " · done" : ""}
                   </p>
-                  <p className="mt-1 text-sm text-white/45">{item.detail}</p>
+                  <p className="mt-1 text-sm text-[var(--mute)]">{item.detail}</p>
                 </div>
               </li>
             ))}
@@ -297,7 +253,9 @@ export default async function DashboardPage() {
 
       <div className="mt-4 grid gap-3 lg:grid-cols-2">
         <Card>
-          <p className="text-sm text-white/45">This week&apos;s sentence</p>
+          <p className="font-hand text-lg text-[var(--moss)]">
+            This week&apos;s sentence
+          </p>
           <form action={updateGoal} className="mt-3 flex gap-2">
             <Input
               name="weeklyGoal"
@@ -317,12 +275,16 @@ export default async function DashboardPage() {
                     <input type="hidden" name="field" value={field} />
                     <button
                       type="submit"
-                      className="flex w-full items-start gap-2 text-left text-sm text-white"
+                      className="flex w-full items-start gap-2 text-left text-sm text-[var(--ink)]"
                     >
-                      <span className="mt-0.5 flex h-4 w-4 items-center justify-center rounded border border-white/20 text-[10px] text-[#e8b44d]">
+                      <span className="mt-0.5 flex h-4 w-4 items-center justify-center border border-[var(--ink)]/25 text-[10px] text-[var(--moss)]">
                         {done ? "✓" : ""}
                       </span>
-                      <span className={done ? "text-white/40 line-through" : ""}>
+                      <span
+                        className={
+                          done ? "text-[var(--mute)] line-through" : ""
+                        }
+                      >
                         {text}
                       </span>
                     </button>
@@ -331,18 +293,21 @@ export default async function DashboardPage() {
               ))}
             </ul>
           ) : (
-            <p className="mt-4 text-sm text-white/45">
+            <p className="mt-4 text-sm text-[var(--mute)]">
               No review yet.{" "}
-              <Link href="/app/review" className="text-[#e8b44d] underline">
+              <Link
+                href="/app/review"
+                className="text-[var(--moss)] underline-offset-4 hover:underline"
+              >
                 Write this week&apos;s three
               </Link>
               .
             </p>
           )}
           {latestReview?.whatMoved ? (
-            <div className="mt-5 border-t border-white/8 pt-4">
-              <p className="text-sm text-white/45">What moved last time</p>
-              <p className="mt-2 text-sm leading-6 text-white/80">
+            <div className="mt-5 border-t border-[var(--rule)] pt-4">
+              <p className="text-sm text-[var(--mute)]">What moved last time</p>
+              <p className="mt-2 text-sm leading-6 text-[var(--ink)]">
                 {latestReview.whatMoved}
               </p>
             </div>
@@ -351,26 +316,31 @@ export default async function DashboardPage() {
 
         <Card>
           <div className="flex items-center justify-between">
-            <p className="text-sm text-white/45">Paying customer log</p>
-            <Link href="/app/customers" className="text-sm text-[#e8b44d]">
+            <p className="font-hand text-lg text-[var(--moss)]">
+              Paying customer log
+            </p>
+            <Link
+              href="/app/customers"
+              className="text-sm text-[var(--moss)] underline-offset-4 hover:underline"
+            >
               View all
             </Link>
           </div>
           {workspace.customers.length === 0 ? (
-            <p className="mt-4 text-sm text-white/45">
+            <p className="mt-4 text-sm text-[var(--mute)]">
               Nobody in the log yet. Add your first paying user — even if it
               was $12.
             </p>
           ) : (
-            <ul className="mt-3 divide-y divide-white/8">
+            <ul className="mt-3 divide-y divide-[var(--rule)]">
               {workspace.customers.slice(0, 5).map((customer) => (
                 <li
                   key={customer.id}
                   className="flex items-center justify-between gap-3 py-3 text-sm"
                 >
                   <div>
-                    <p className="text-white">{customer.name}</p>
-                    <p className="mt-0.5 text-white/40">
+                    <p className="text-[var(--ink)]">{customer.name}</p>
+                    <p className="mt-0.5 text-[var(--mute)]">
                       {customer.paidAt.toLocaleDateString("en-GB", {
                         day: "numeric",
                         month: "short",
@@ -378,7 +348,7 @@ export default async function DashboardPage() {
                       {customer.notes ? ` · ${customer.notes}` : ""}
                     </p>
                   </div>
-                  <span className="font-mono text-[#e8b44d]">
+                  <span className="font-mono text-[var(--brass)]">
                     {formatMoney(customer.amountCents)}
                   </span>
                 </li>
@@ -387,6 +357,67 @@ export default async function DashboardPage() {
           )}
         </Card>
       </div>
+
+      <Card className="mt-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="font-hand text-lg text-[var(--moss)]">
+              Connected systems
+            </p>
+            <p className="mt-1 text-sm text-[var(--mute)]">
+              {systems.connected === 0
+                ? "Analytics, Stripe, and social are empty slots."
+                : `${systems.connected} of 3 slots live.`}
+            </p>
+          </div>
+          <Link href="/app/integrations">
+            <Button variant="outline">Open integrations</Button>
+          </Link>
+        </div>
+        <div className="mt-4 grid gap-2 sm:grid-cols-3">
+          {(
+            [
+              [
+                "Analytics",
+                systems.analytics,
+                workspace.gaMeasurementId ||
+                  workspace.gtmContainerId ||
+                  "Not connected",
+              ],
+              [
+                "Stripe",
+                systems.stripe,
+                workspace.planStatus === "active" ? "Plan active" : "Unpaid",
+              ],
+              [
+                "Social",
+                systems.social,
+                social.length
+                  ? social.map((link) => link.label).join(" · ")
+                  : "No profiles",
+              ],
+            ] as const
+          ).map(([label, on, detail]) => (
+            <div
+              key={label}
+              className="border-t border-[var(--ink)] px-1 py-3"
+            >
+              <p className="font-mono text-xs tracking-wider text-[var(--brass)]">
+                {on ? "LIVE" : "SLOT"}
+              </p>
+              <p className="mt-1 font-medium">{label}</p>
+              <p className="mt-1 text-sm text-[var(--mute)]">{detail}</p>
+            </div>
+          ))}
+        </div>
+        {social.length > 0 ? (
+          <div className="mt-4">
+            <ShareRow
+              text={`${workspace.name} writes the week on one Pulseboard page.`}
+            />
+          </div>
+        ) : null}
+      </Card>
     </div>
   );
 }

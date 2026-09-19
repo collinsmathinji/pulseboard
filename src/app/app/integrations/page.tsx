@@ -19,8 +19,10 @@ import { ShareRow } from "@/components/social";
 function StatusPill({ on, label }: { on: boolean; label: string }) {
   return (
     <span
-      className={`rounded-full px-2.5 py-1 text-xs ${
-        on ? "bg-[#e8b44d]/16 text-[#e8b44d]" : "bg-white/8 text-white/45"
+      className={`px-2.5 py-1 text-xs ${
+        on
+          ? "bg-[var(--moss)]/12 text-[var(--moss)]"
+          : "bg-[var(--rule)]/40 text-[var(--mute)]"
       }`}
     >
       {label}
@@ -39,33 +41,35 @@ export default async function IntegrationsPage() {
   );
 
   return (
-    <div className="mx-auto max-w-3xl pb-6">
+    <div className="app-rise mx-auto max-w-3xl pb-6">
       <PageKicker>Systems · {workspace.name}</PageKicker>
       <PageTitle>Plug the stack in.</PageTitle>
-      <p className="mt-3 max-w-xl text-sm leading-6 text-white/55">
+      <p className="mt-3 max-w-xl text-sm leading-7 text-[var(--mute)]">
         Three slots. Analytics measures the page. Stripe takes the money.
         Social is how the week leaves the building.
       </p>
 
       <div className="mt-8 grid gap-3 sm:grid-cols-3">
         <Card>
-          <p className="text-sm text-white/45">Connected</p>
+          <p className="font-hand text-lg text-[var(--moss)]">Connected</p>
           <p className="mt-2 font-black text-3xl">{counts.connected} / 3</p>
         </Card>
         <Card>
-          <p className="text-sm text-white/45">Payments</p>
+          <p className="font-hand text-lg text-[var(--moss)]">Payments</p>
           <p className="mt-2 font-black text-3xl">
             {stripe.paymentsLive ? "Live" : "Local"}
           </p>
         </Card>
         <Card>
-          <p className="text-sm text-white/45">Social profiles</p>
+          <p className="font-hand text-lg text-[var(--moss)]">Social profiles</p>
           <p className="mt-2 font-black text-3xl">{social.length}</p>
         </Card>
       </div>
 
       <Card className="mt-4">
-        <p className="font-mono text-sm text-[#e8b44d]">01 · Google Analytics</p>
+        <p className="font-mono text-sm text-[var(--brass)]">
+          01 · Google Analytics
+        </p>
         <div className="mt-3 flex flex-wrap gap-2">
           <StatusPill
             on={Boolean(workspace.gaMeasurementId)}
@@ -84,13 +88,13 @@ export default async function IntegrationsPage() {
             }
           />
         </div>
-        <p className="mt-4 text-sm leading-6 text-white/55">
+        <p className="mt-4 text-sm leading-6 text-[var(--mute)]">
           Paste a GA4 measurement ID and Pulseboard loads gtag on your founder
           pages. Add GTM if you already route tags through a container. IDs stay
           on this workspace in Supabase — they are not secrets, but they are
           yours.
         </p>
-        <ol className="mt-4 space-y-2 text-sm leading-6 text-white/65">
+        <ol className="mt-4 space-y-2 text-sm leading-6 text-[var(--ink)]/80">
           <li>1. Open Google Analytics → Admin → Data streams → Web.</li>
           <li>2. Copy the Measurement ID. It looks like G-XXXXXXXX.</li>
           <li>3. Optional: Tag Manager → Admin → Container ID (GTM-XXXX).</li>
@@ -129,7 +133,7 @@ export default async function IntegrationsPage() {
       </Card>
 
       <Card className="mt-4">
-        <p className="font-mono text-sm text-[#e8b44d]">02 · Stripe</p>
+        <p className="font-mono text-sm text-[var(--brass)]">02 · Stripe</p>
         <div className="mt-3 flex flex-wrap gap-2">
           <StatusPill
             on={stripe.paymentsLive}
@@ -148,40 +152,40 @@ export default async function IntegrationsPage() {
             }
           />
         </div>
-        <p className="mt-4 text-sm leading-6 text-white/55">
+        <p className="mt-4 text-sm leading-6 text-[var(--mute)]">
           Stripe is the payment slot for Pulseboard itself. Keys live in the
           server environment, not in this form. When they are present, checkout
           charges a card. When they are not, local checkout unlocks the app
           without taking money.
         </p>
         <dl className="mt-5 grid gap-3 text-sm sm:grid-cols-2">
-          <div className="rounded-2xl bg-white/4 px-4 py-3">
-            <dt className="text-white/45">Checkout</dt>
-            <dd className="mt-1 text-white">
+          <div className="border-t border-[var(--ink)] px-1 py-3">
+            <dt className="text-[var(--mute)]">Checkout</dt>
+            <dd className="mt-1 text-[var(--ink)]">
               {stripe.paymentsLive
                 ? "Live Checkout Session on /api/stripe/checkout"
                 : "Local unlock on billing — no charge"}
             </dd>
           </div>
-          <div className="rounded-2xl bg-white/4 px-4 py-3">
-            <dt className="text-white/45">Webhook</dt>
-            <dd className="mt-1 text-white">
+          <div className="border-t border-[var(--ink)] px-1 py-3">
+            <dt className="text-[var(--mute)]">Webhook</dt>
+            <dd className="mt-1 text-[var(--ink)]">
               {stripe.webhook
                 ? "customer.subscription.* will update this workspace"
                 : "Point Stripe to /api/stripe/webhook before going live"}
             </dd>
           </div>
-          <div className="rounded-2xl bg-white/4 px-4 py-3">
-            <dt className="text-white/45">Prices</dt>
-            <dd className="mt-1 text-white">
+          <div className="border-t border-[var(--ink)] px-1 py-3">
+            <dt className="text-[var(--mute)]">Prices</dt>
+            <dd className="mt-1 text-[var(--ink)]">
               {stripe.priceMonthly || stripe.priceAnnual
                 ? `${stripe.priceMonthly ? "Monthly ID set" : "Monthly price_data"} · ${stripe.priceAnnual ? "Annual ID set" : "Annual price_data"}`
                 : "$12 / month and $99 / year via price_data"}
             </dd>
           </div>
-          <div className="rounded-2xl bg-white/4 px-4 py-3">
-            <dt className="text-white/45">This workspace</dt>
-            <dd className="mt-1 text-white">
+          <div className="border-t border-[var(--ink)] px-1 py-3">
+            <dt className="text-[var(--mute)]">This workspace</dt>
+            <dd className="mt-1 text-[var(--ink)]">
               {workspace.stripeCustomerId
                 ? `Customer ${workspace.stripeCustomerId.slice(0, 12)}…`
                 : "No Stripe customer yet"}
@@ -205,7 +209,7 @@ export default async function IntegrationsPage() {
       </Card>
 
       <Card className="mt-4">
-        <p className="font-mono text-sm text-[#e8b44d]">03 · Social</p>
+        <p className="font-mono text-sm text-[var(--brass)]">03 · Social</p>
         <div className="mt-3 flex flex-wrap gap-2">
           {social.length === 0 ? (
             <StatusPill on={false} label="No profiles yet" />
@@ -215,7 +219,7 @@ export default async function IntegrationsPage() {
             ))
           )}
         </div>
-        <p className="mt-4 text-sm leading-6 text-white/55">
+        <p className="mt-4 text-sm leading-6 text-[var(--mute)]">
           Handles or full URLs. Pulseboard normalizes them, shows them on
           Overview, and builds share links for the week. Site-wide Pulseboard
           profiles (the marketing footer) still come from environment variables.
@@ -293,7 +297,7 @@ export default async function IntegrationsPage() {
                   href={link.href}
                   target="_blank"
                   rel="me noopener noreferrer"
-                  className="text-[#e8b44d] underline-offset-4 hover:underline"
+                  className="text-[var(--moss)] underline-offset-4 hover:underline"
                 >
                   {link.label} → {link.href.replace(/^https?:\/\//, "")}
                 </a>
@@ -303,11 +307,11 @@ export default async function IntegrationsPage() {
         ) : null}
 
         <div className="mt-6">
-          <p className="text-sm text-white/45">Share this week</p>
+          <p className="text-sm text-[var(--mute)]">Share this week</p>
           <div className="mt-3">
             <ShareRow text={`${workspace.name} writes the week on one page.`} />
           </div>
-          <p className="mt-3 text-xs text-white/35">
+          <p className="mt-3 text-xs text-[var(--mute)]">
             Opens {share.map((item) => item.label.replace("Share on ", "")).join(", ")}{" "}
             with Pulseboard’s URL already filled in.
           </p>

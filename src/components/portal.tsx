@@ -9,7 +9,12 @@ export function PortalCanvas({
   className?: string;
 }) {
   return (
-    <div className={cn("min-h-svh bg-[#16081f] text-white", className)}>
+    <div
+      className={cn(
+        "min-h-svh bg-[var(--paper)] text-[var(--ink)]",
+        className,
+      )}
+    >
       {children}
     </div>
   );
@@ -29,8 +34,18 @@ export function StandaloneCard({
   );
 }
 
-export function PageKicker({ children }: { children: ReactNode }) {
-  return <p className="text-sm text-[#e8b44d]">{children}</p>;
+export function PageKicker({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <p className={cn("font-hand text-xl text-[var(--moss)]", className)}>
+      {children}
+    </p>
+  );
 }
 
 export function PageTitle({
@@ -43,7 +58,7 @@ export function PageTitle({
   return (
     <h1
       className={cn(
-        "mt-2 font-sans text-4xl leading-[0.95] font-black tracking-tight text-white md:text-5xl",
+        "mt-2 font-sans text-4xl leading-[0.95] font-black tracking-tight text-[var(--ink)] md:text-5xl",
         className,
       )}
     >
@@ -52,21 +67,31 @@ export function PageTitle({
   );
 }
 
+export function Notice({ children }: { children: ReactNode }) {
+  return (
+    <p className="mt-4 border border-[var(--rule)] bg-[var(--sheet)] px-3 py-2 text-sm text-[var(--ink)]">
+      {children}
+    </p>
+  );
+}
+
 export function PathToFive({ count }: { count: number }) {
   const n = Math.min(5, Math.max(0, count));
   return (
     <div>
       <div className="flex items-center justify-between gap-4">
-        <p className="text-sm text-white/55">Path to five paying users</p>
-        <p className="font-mono text-sm text-[#e8b44d]">{n} / 5</p>
+        <p className="font-hand text-lg text-[var(--moss)]">
+          Path to five paying users
+        </p>
+        <p className="font-mono text-sm text-[var(--brass)]">{n} / 5</p>
       </div>
-      <div className="mt-3 flex gap-2">
+      <div className="mt-3 flex gap-1.5">
         {Array.from({ length: 5 }, (_, i) => (
           <span
             key={i}
             className={cn(
-              "h-2 flex-1 rounded-full",
-              i < n ? "bg-[#e8b44d]" : "bg-white/10",
+              "h-1.5 flex-1",
+              i < n ? "bg-[var(--moss)]" : "bg-[var(--rule)]",
             )}
           />
         ))}
@@ -84,7 +109,9 @@ export function formatWeekStamp(date = new Date()) {
 }
 
 export function isoWeek(date = new Date()) {
-  const t = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  const t = new Date(
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
+  );
   const day = t.getUTCDay() || 7;
   t.setUTCDate(t.getUTCDate() + 4 - day);
   const yearStart = new Date(Date.UTC(t.getUTCFullYear(), 0, 1));

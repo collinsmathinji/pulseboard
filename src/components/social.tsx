@@ -49,7 +49,7 @@ export function ShareRow({
           href={link.href}
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-full bg-white/8 px-3 py-1.5 text-sm text-white/70 hover:bg-white/12 hover:text-white"
+          className="border border-[var(--rule)] bg-[var(--sheet)] px-3 py-1.5 text-sm text-[var(--ink)] hover:border-[var(--ink)]/35"
         >
           {link.label}
         </a>

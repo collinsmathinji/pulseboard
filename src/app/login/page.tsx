@@ -2,9 +2,9 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth, authFlags } from "@/auth";
 import { continueWithGoogle, returnToAccount } from "@/actions/auth";
-import { BrandMark } from "@/components/brand";
+import { AuthFrame } from "@/components/auth-frame";
+import { Notice } from "@/components/portal";
 import { Button, Input, Label } from "@/components/ui";
-import { StandaloneCard, PageKicker, PageTitle } from "@/components/portal";
 
 const NOTICES: Record<string, string> = {
   exists: "That email already has a Pulseboard. Sign in here.",
@@ -32,21 +32,27 @@ export default async function LoginPage({
     redirect(next);
   }
 
+  const signupHref = `/signup?next=${encodeURIComponent("/billing")}`;
+
   return (
-    <StandaloneCard>
-      <BrandMark />
-      <PageKicker>Welcome back</PageKicker>
-      <PageTitle className="mt-3">Sign in</PageTitle>
-      <p className="mt-3 text-sm leading-6 text-white/55">
-        Returning founders land on the Monday page. New here? Create an account
-        first — that path picks a plan.
-      </p>
-      {notice && NOTICES[notice] ? (
-        <p className="mt-4 rounded-2xl bg-[#e8b44d]/12 px-3 py-2 text-sm text-[#e8b44d]">
-          {NOTICES[notice]}
-        </p>
-      ) : null}
-      <form action={returnToAccount} className="mt-6 space-y-4">
+    <AuthFrame
+      kicker="Welcome back"
+      title="Sign in."
+      body="Returning founders land on the Monday page. New here? Create an account first — that path picks a plan."
+      footer={
+        <>
+          New founder?{" "}
+          <Link href={signupHref} className="text-[var(--brass)]">
+            Create an account
+          </Link>
+        </>
+      }
+      formKicker="Returning founder"
+      formTitle="Sign in"
+      formBody="Use the same work email. We remember you on this browser for 30 days."
+    >
+      {notice && NOTICES[notice] ? <Notice>{NOTICES[notice]}</Notice> : null}
+      <form action={returnToAccount} className="mt-8 space-y-4">
         <input type="hidden" name="next" value={next} />
         <div>
           <Label htmlFor="email">Work email</Label>
@@ -55,6 +61,7 @@ export default async function LoginPage({
             name="email"
             type="email"
             required
+            autoComplete="email"
             placeholder="you@company.com"
           />
         </div>
@@ -70,15 +77,12 @@ export default async function LoginPage({
           </Button>
         </form>
       ) : null}
-      <p className="mt-6 text-sm text-white/45">
+      <p className="mt-6 text-sm text-[var(--mute)] md:hidden">
         New founder?{" "}
-        <Link
-          href={`/signup?next=${encodeURIComponent("/billing")}`}
-          className="text-[#e8b44d] underline"
-        >
+        <Link href={signupHref} className="font-medium text-[var(--ink)] underline">
           Create an account
         </Link>
       </p>
-    </StandaloneCard>
+    </AuthFrame>
   );
 }

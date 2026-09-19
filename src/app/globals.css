@@ -11,6 +11,7 @@
   --brass: #b8922a;
   --rule: #c4c2bb;
   --mute: #5c635c;
+  --rust: #7a2e24;
 }
 
 @theme inline {
@@ -143,11 +144,36 @@ body {
   }
 }
 
+.app-shell,
+.auth-shell {
+  color: var(--ink);
+  background: var(--paper);
+}
+
+.auth-grain {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.auth-rise {
+  animation: landing-rise 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.app-rise {
+  animation: landing-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .landing-rise,
   .landing-hero-media,
   .landing-underline,
-  .landing-float {
+  .landing-float,
+  .auth-rise,
+  .app-rise {
     animation: none;
     transform: none;
     opacity: 1;

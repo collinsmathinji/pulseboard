@@ -11,7 +11,7 @@ export default async function AppShell({ children }: { children: ReactNode }) {
   if (!workspace.onboardingComplete) redirect("/onboarding");
 
   return (
-    <div className="flex min-h-svh flex-col bg-[#16081f] text-white lg:flex-row">
+    <div className="app-shell flex min-h-svh flex-col lg:flex-row">
       <AppNav workspaceName={workspace.name} email={session.user.email} />
       <div className="min-w-0 flex-1 px-5 py-6 lg:px-10 lg:py-8">{children}</div>
       <AnalyticsScripts

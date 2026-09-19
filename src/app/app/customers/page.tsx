@@ -23,25 +23,25 @@ export default async function CustomersPage({
       : 0;
 
   return (
-    <div className="mx-auto max-w-6xl pb-6">
+    <div className="app-rise mx-auto max-w-6xl pb-6">
       <PageKicker>The book · {workspace.name}</PageKicker>
       <PageTitle>Paying customers</PageTitle>
-      <p className="mt-3 max-w-xl text-sm leading-6 text-white/55">
+      <p className="mt-3 max-w-xl text-sm leading-7 text-[var(--mute)]">
         Name, amount, date. The only list that matters before product-market
         fit.
       </p>
 
       <div className="mt-8 grid gap-3 sm:grid-cols-3">
         <Card>
-          <p className="text-sm text-white/45">Logged</p>
+          <p className="font-hand text-lg text-[var(--moss)]">Logged</p>
           <p className="mt-2 font-black text-3xl">{workspace.customers.length}</p>
         </Card>
         <Card>
-          <p className="text-sm text-white/45">Recorded revenue</p>
+          <p className="font-hand text-lg text-[var(--moss)]">Recorded revenue</p>
           <p className="mt-2 font-black text-3xl">{formatMoney(total)}</p>
         </Card>
         <Card>
-          <p className="text-sm text-white/45">Average payment</p>
+          <p className="font-hand text-lg text-[var(--moss)]">Average payment</p>
           <p className="mt-2 font-black text-3xl">
             {workspace.customers.length ? formatMoney(average) : "—"}
           </p>
@@ -50,7 +50,7 @@ export default async function CustomersPage({
 
       <Card className="mt-4">
         <PathToFive count={workspace.customers.length} />
-        <p className="mt-3 text-sm text-white/45">
+        <p className="mt-3 text-sm text-[var(--mute)]">
           {remaining > 0
             ? `${remaining} more name${remaining === 1 ? "" : "s"} to the milestone.`
             : "Milestone hit. Keep logging every payment."}
@@ -58,7 +58,7 @@ export default async function CustomersPage({
       </Card>
 
       {params.error === "name" ? (
-        <p className="mt-4 text-sm text-red-300">Name is required.</p>
+        <p className="mt-4 text-sm text-[var(--rust)]">Name is required.</p>
       ) : null}
 
       <div className="mt-4 grid gap-4 lg:grid-cols-[340px_1fr]">
@@ -67,15 +67,32 @@ export default async function CustomersPage({
           <form action={addCustomer} className="mt-5 space-y-3">
             <div>
               <Label htmlFor="name">Name</Label>
-              <Input id="name" name="name" required placeholder="Alex from Northwind" />
+              <Input
+                id="name"
+                name="name"
+                required
+                placeholder="Alex from Northwind"
+              />
             </div>
             <div>
               <Label htmlFor="email">Email</Label>
-              <Input id="email" name="email" type="email" placeholder="optional" />
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="optional"
+              />
             </div>
             <div>
               <Label htmlFor="amount">Amount (USD)</Label>
-              <Input id="amount" name="amount" type="number" min="0" step="0.01" defaultValue="12" />
+              <Input
+                id="amount"
+                name="amount"
+                type="number"
+                min="0"
+                step="0.01"
+                defaultValue="12"
+              />
             </div>
             <div>
               <Label htmlFor="paidAt">Paid on</Label>
@@ -98,19 +115,19 @@ export default async function CustomersPage({
 
         <Card>
           {workspace.customers.length === 0 ? (
-            <p className="text-sm text-white/45">
+            <p className="text-sm text-[var(--mute)]">
               Your first paying user belongs here — even if it was $12.
             </p>
           ) : (
-            <ul className="divide-y divide-white/8">
+            <ul className="divide-y divide-[var(--rule)]">
               {workspace.customers.map((customer) => (
                 <li
                   key={customer.id}
                   className="flex flex-wrap items-center justify-between gap-3 py-4"
                 >
                   <div>
-                    <p className="text-white">{customer.name}</p>
-                    <p className="mt-1 text-sm text-white/40">
+                    <p className="text-[var(--ink)]">{customer.name}</p>
+                    <p className="mt-1 text-sm text-[var(--mute)]">
                       {customer.email || "No email"} ·{" "}
                       {customer.paidAt.toLocaleDateString("en-GB", {
                         day: "numeric",
@@ -119,11 +136,13 @@ export default async function CustomersPage({
                       })}
                     </p>
                     {customer.notes ? (
-                      <p className="mt-1 text-sm text-white/55">{customer.notes}</p>
+                      <p className="mt-1 text-sm text-[var(--mute)]">
+                        {customer.notes}
+                      </p>
                     ) : null}
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="font-mono text-sm text-[#e8b44d]">
+                    <span className="font-mono text-sm text-[var(--brass)]">
                       {formatMoney(customer.amountCents)}
                     </span>
                     <form action={deleteCustomer}>

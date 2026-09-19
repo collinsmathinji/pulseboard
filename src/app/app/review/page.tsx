@@ -2,7 +2,12 @@ import { requireSession, getWorkspace } from "@/lib/workspace";
 import { saveWeeklyReview } from "@/actions/workspace";
 import { formatMoney, startOfWeek } from "@/lib/utils";
 import { Button, Card, Input, Label, Textarea } from "@/components/ui";
-import { PageKicker, PageTitle, formatWeekStamp, isoWeek } from "@/components/portal";
+import {
+  PageKicker,
+  PageTitle,
+  formatWeekStamp,
+  isoWeek,
+} from "@/components/portal";
 
 export default async function ReviewPage() {
   const session = await requireSession();
@@ -13,12 +18,12 @@ export default async function ReviewPage() {
     latest && startOfWeek(latest.weekOf).getTime() === weekOf.getTime();
 
   return (
-    <div className="mx-auto max-w-3xl pb-6">
+    <div className="app-rise mx-auto max-w-3xl pb-6">
       <PageKicker>
         Ritual · week {isoWeek()} · {formatWeekStamp(weekOf)}
       </PageKicker>
       <PageTitle>Write the week</PageTitle>
-      <p className="mt-3 text-sm leading-6 text-white/55">
+      <p className="mt-3 text-sm leading-7 text-[var(--mute)]">
         Fifteen minutes. Update the numbers, pick three priorities, write what
         moved. Then close the tabs.
       </p>
@@ -27,7 +32,7 @@ export default async function ReviewPage() {
         <input type="hidden" name="weekOf" value={weekOf.toISOString()} />
 
         <Card>
-          <p className="font-mono text-sm text-[#e8b44d]">01 · Four numbers</p>
+          <p className="font-mono text-sm text-[var(--brass)]">01 · Four numbers</p>
           <div className="mt-4 grid gap-3 sm:grid-cols-3">
             <div>
               <Label htmlFor="mrr">MRR (USD)</Label>
@@ -65,7 +70,7 @@ export default async function ReviewPage() {
         </Card>
 
         <Card>
-          <p className="font-mono text-sm text-[#e8b44d]">02 · Keep three</p>
+          <p className="font-mono text-sm text-[var(--brass)]">02 · Keep three</p>
           <div className="mt-4 space-y-3">
             <div>
               <Label htmlFor="priority1">Priority 1</Label>
@@ -96,7 +101,7 @@ export default async function ReviewPage() {
         </Card>
 
         <Card>
-          <p className="font-mono text-sm text-[#e8b44d]">03 · What moved</p>
+          <p className="font-mono text-sm text-[var(--brass)]">03 · What moved</p>
           <div className="mt-4">
             <Label htmlFor="whatMoved">Wins, stalls, conversations</Label>
             <Textarea
@@ -120,7 +125,7 @@ export default async function ReviewPage() {
             {workspace.reviews.map((review) => (
               <Card key={review.id}>
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <p className="text-sm text-[#e8b44d]">
+                  <p className="font-hand text-lg text-[var(--moss)]">
                     Week of{" "}
                     {review.weekOf.toLocaleDateString("en-GB", {
                       day: "numeric",
@@ -128,19 +133,19 @@ export default async function ReviewPage() {
                       year: "numeric",
                     })}
                   </p>
-                  <p className="font-mono text-sm text-white/45">
+                  <p className="font-mono text-sm text-[var(--mute)]">
                     {formatMoney(review.mrrCents)} · {review.payingUsers} users ·{" "}
                     {review.runwayMonths} mo
                   </p>
                 </div>
-                <ul className="mt-3 space-y-1 text-sm text-white/80">
+                <ul className="mt-3 space-y-1 text-sm text-[var(--ink)]">
                   {[review.priority1, review.priority2, review.priority3]
                     .filter(Boolean)
                     .map((item) => (
                       <li key={item}>{item}</li>
                     ))}
                 </ul>
-                <p className="mt-3 text-sm leading-6 text-white/55">
+                <p className="mt-3 text-sm leading-6 text-[var(--mute)]">
                   {review.whatMoved || "No notes"}
                 </p>
               </Card>

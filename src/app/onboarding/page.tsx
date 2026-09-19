@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 import { requireSession, getWorkspace, isPaid } from "@/lib/workspace";
 import { completeOnboarding } from "@/actions/workspace";
+import { AuthFrame } from "@/components/auth-frame";
 import { Button, Input, Label } from "@/components/ui";
-import { StandaloneCard, PageKicker, PageTitle } from "@/components/portal";
 
 export default async function OnboardingPage() {
   const session = await requireSession();
@@ -11,13 +11,15 @@ export default async function OnboardingPage() {
   if (workspace.onboardingComplete) redirect("/app");
 
   return (
-    <StandaloneCard className="max-w-xl">
-      <PageKicker>Step 3 of 3 · Setup</PageKicker>
-      <PageTitle className="mt-3">Name the company.</PageTitle>
-      <p className="mt-3 text-sm leading-6 text-white/55">
-        Plan is active. Log the numbers you already know. You can change them
-        every Monday.
-      </p>
+    <AuthFrame
+      kicker="Step 3 of 3 · Setup"
+      title="Name the company."
+      body="Plan is active. Log the numbers you already know. You can change them every Monday."
+      step={3}
+      formKicker="Then open the page"
+      formTitle="First numbers"
+      formBody="A name, MRR, paying users, runway, and this week’s sentence."
+    >
       <form action={completeOnboarding} className="mt-8 space-y-4">
         <div>
           <Label htmlFor="name">Startup name</Label>
@@ -70,6 +72,6 @@ export default async function OnboardingPage() {
           Open my scorecard
         </Button>
       </form>
-    </StandaloneCard>
+    </AuthFrame>
   );
 }

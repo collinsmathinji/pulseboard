@@ -24,7 +24,9 @@ export function BrandMark({
         className="rounded-lg"
         priority
       />
-      <span className="font-serif text-2xl text-[#b8922a]">Pulseboard</span>
+      <span className="font-serif text-2xl tracking-tight text-[var(--brass)]">
+        Pulseboard
+      </span>
     </Link>
   );
 }
